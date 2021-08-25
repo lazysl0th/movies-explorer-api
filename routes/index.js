@@ -18,7 +18,7 @@ router.use(auth);
 router.use('/users', usersRoutes);
 router.use('/movies', moviesRoutes);
 
-router.get('/*', (req, res, next) => {
+router.all('/*', (req, res, next) => {
   next(new NotFoundError(NOT_FOUND.text));
 });
 

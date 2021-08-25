@@ -5,11 +5,12 @@ const helmet = require('helmet');
 const { errors } = require('celebrate');
 const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { limiter } = require('./middlewares/limiter');
 const router = require('./routes');
 const { INTERNAL_SERVER_ERROR } = require('./constant');
 const {
   PORT,
-  HOST,
+  DBHOST,
   DBPORT,
   DBNAME,
 } = require('./config');
@@ -20,9 +21,11 @@ app.use(helmet());
 
 app.use(cors);
 
+app.use(limiter);
+
 app.use(cookieParser());
 
-mongoose.connect(`mongodb://${HOST}:${DBPORT}/${DBNAME}`, {
+mongoose.connect(`mongodb://${DBHOST}:${DBPORT}/${DBNAME}`, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,

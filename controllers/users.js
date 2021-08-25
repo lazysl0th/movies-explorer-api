@@ -30,17 +30,20 @@ module.exports.getUserProfile = (req, res, next) => {
 };
 
 module.exports.updateUserProfile = (req, res, next) => {
-  const { name } = req.body;
+  const { name, email } = req.body;
 
   User.findByIdAndUpdate(
     req.user._id,
-    { name },
+    { name, email },
     { new: true, runValidators: true },
   )
     .then((user) => res.status(OK.statusCode).send(user))
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
         return next(new BadRequestError(BAD_REQUEST.text));
+      }
+      if (err.name === 'MongoError' && err.code === 11000) {
+        return next(new Conflict(CONFLICT.text));
       }
       return next(err);
     });

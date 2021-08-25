@@ -13,7 +13,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  duretion: {
+  duration: {
     type: Number,
     require: true,
   },
@@ -61,7 +61,7 @@ const movieSchema = new mongoose.Schema({
     require: true,
   },
   movieId: {
-    type: String,
+    type: Number,
     require: true,
   },
   nameRU: {
