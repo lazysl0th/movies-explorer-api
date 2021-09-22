@@ -1,7 +1,7 @@
 const allowedCors = [
   'http://localhost:3000',
-  'http://movies-explorer.ls.nomoredomains.rocks/',
-  'https://movies-explorer.ls.nomoredomains.rocks/',
+  'http://movies-explorer.ls.nomoredomains.rocks',
+  'https://movies-explorer.ls.nomoredomains.rocks',
 ];
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
