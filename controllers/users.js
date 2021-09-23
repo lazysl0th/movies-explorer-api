@@ -60,7 +60,7 @@ module.exports.login = (req, res, next) => {
       return res.status(OK.statusCode).cookie('token', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
-        sameSite: true,
+        sameSite: false,
       }).send({ _id, email, name });
     })
     .catch(next);
