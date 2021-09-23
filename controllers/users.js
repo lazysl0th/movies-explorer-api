@@ -88,4 +88,4 @@ module.exports.createUser = (req, res, next) => {
       }));
 };
 
-module.exports.logout = (req, res) => res.status(OK.statusCode).clearCookie('token').send({});
+module.exports.logout = (req, res) => res.status(OK.statusCode).clearCookie('token', { sameSite: 'none', secure: true }).send({});
