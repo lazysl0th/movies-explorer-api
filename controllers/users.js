@@ -59,6 +59,7 @@ module.exports.login = (req, res, next) => {
       const token = jwt.sign({ _id }, JWT_SECRET, { expiresIn: '7d' });
       return res.status(OK.statusCode).cookie('token', token, {
         maxAge: 3600000 * 24 * 7,
+        secure: true,
         httpOnly: true,
         sameSite: 'none',
       }).send({ _id, email, name });
