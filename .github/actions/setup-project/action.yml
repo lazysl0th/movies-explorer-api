@@ -4,9 +4,6 @@ description: 'Clones the repo, configures Node.js, and installs dependencies wit
 runs:
   using: 'composite'
   steps:
-    - name: 🔍 Clone Repository
-      uses: actions/checkout@v4
-
     - name: 🟢 Initialize Node.js Environment
       uses: actions/setup-node@v4
       with:
