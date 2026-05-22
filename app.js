@@ -10,10 +10,7 @@ const router = require('./routes');
 const { INTERNAL_SERVER_ERROR } = require('./constant');
 const {
   PORT,
-  DBHOST,
-  DBPORT,
-  DBNAME,
-  MONGODBURI,
+  MONGODB_URI,
 } = require('./config');
 
 const app = express();
@@ -26,7 +23,7 @@ app.use(limiter);
 
 app.use(cookieParser());
 
-mongoose.connect(`${MONGODBURI}`, {
+mongoose.connect(`${MONGODB_URI}`, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
