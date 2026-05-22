@@ -1,11 +1,11 @@
 name: 'Setup Project Environment'
-description: 'Clones the repo, configures Node.js, and installs dependencies with caching'
+description: 'Configures Node.js and installs dependencies with caching'
 
 runs:
   using: 'composite'
   steps:
     - name: 🟢 Initialize Node.js Environment
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: 22
         cache: npm
