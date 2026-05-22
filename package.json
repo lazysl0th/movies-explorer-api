@@ -1,42 +1,70 @@
 {
-  "name": "movies-explorer-api",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "nodemon app.js",
-    "start": "node app.js",
-    "lint": "npx eslint ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lazysl0th/movies-explorer-api.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/lazysl0th/movies-explorer-api/issues"
-  },
-  "homepage": "https://github.com/lazysl0th/movies-explorer-api#readme",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "celebrate": "^15.0.0",
-    "cookie-parser": "^1.4.5",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "express-rate-limit": "^5.3.0",
-    "express-winston": "^4.1.0",
-    "helmet": "^4.6.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.13.7",
-    "validator": "^13.6.0",
-    "winston": "^3.3.3"
-  },
-  "devDependencies": {
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.24.0",
-    "nodemon": "^2.0.12"
-  }
+	"name": "movies-explorer-api",
+	"version": "1.2.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "nodemon app.js",
+		"start": "node app.js",
+		"test": "",
+		"lint": "eslint --fix",
+		"format": "prettier --write .",
+		"check": "npm run lint && npm run format",
+		"commit": "npm run check && cz",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"*.{js,ts}": [
+			"npm run lint",
+			"npm run format"
+		],
+		"*.{json,md}": [
+			"npm run format"
+		]
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/lazysl0th/movies-explorer-api.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/lazysl0th/movies-explorer-api/issues"
+	},
+	"homepage": "https://github.com/lazysl0th/movies-explorer-api#readme",
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"celebrate": "^15.0.0",
+		"cookie-parser": "^1.4.5",
+		"dotenv": "^10.0.0",
+		"express": "^4.17.1",
+		"express-rate-limit": "^5.3.0",
+		"express-winston": "^4.1.0",
+		"helmet": "^4.6.0",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^5.13.7",
+		"validator": "^13.6.0",
+		"winston": "^3.3.3"
+	},
+	"devDependencies": {
+		"commitizen": "^4.3.1",
+		"cz-conventional-changelog": "^3.3.0",
+		"eslint": "^7.32.0",
+		"eslint-config-airbnb-base": "^14.2.1",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-eslint-comments": "^3.2.0",
+		"eslint-plugin-import": "^2.24.0",
+		"eslint-plugin-prettier": "^5.5.5",
+		"husky": "^9.1.7",
+		"lint-staged": "^17.0.5",
+		"nodemon": "^2.0.12",
+		"prettier": "^3.8.3",
+		"standard-version": "^9.5.0"
+	}
 }

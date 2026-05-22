@@ -1,10 +1,10 @@
-const { UNAUTHORIZED } = require('../constant');
+const { UNAUTHORIZED } = require('../constant')
 
 class Unauthorized extends Error {
-  constructor(message) {
-    super(message);
-    this.statusCode = UNAUTHORIZED.statusCode;
-  }
+	constructor(message) {
+		super(message)
+		this.statusCode = UNAUTHORIZED.statusCode
+	}
 }
 
-module.exports = Unauthorized;
+module.exports = Unauthorized
