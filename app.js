@@ -45,6 +45,7 @@ app.use(errorLogger);
 app.use(errors());
 
 app.use((err, req, res, next) => {
+  console.log(err)
   const { statusCode = INTERNAL_SERVER_ERROR.statusCode, message } = err;
 
   res.status(statusCode).send({
