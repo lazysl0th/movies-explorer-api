@@ -1,6 +1,6 @@
 name: Continuous Integration
 
-run-name: CI run by @${{ github.actor }} — 🚀 ${{ github.event.head_commit.message }}
+run-name: CI Run by @${{ github.actor }} — 🚀 ${{ github.event.head_commit.message }}
 
 on:
   pull_request:
@@ -14,9 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🔍 Clone Repository
-        uses: actions/checkout@v4
-        
-      - name: 🛠️ Prepare Environment
+        uses: actions/checkout@v6
+
+      - name: 🛠️ Setup Node & Dependencies
         uses: ./.github/actions/setup-project
 
       - name: 🧼 Run Linter Checks
@@ -27,9 +27,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🔍 Clone Repository
-        uses: actions/checkout@v4
-        
-      - name: 🛠️ Prepare Environment
+        uses: actions/checkout@v6
+
+      - name: 🛠️ Setup Node & Dependencies
         uses: ./.github/actions/setup-project
 
       - name: 🧪 Execute Test Suite
@@ -40,9 +40,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🔍 Clone Repository
-        uses: actions/checkout@v4
-        
-      - name: 🛠️ Prepare Environment
+        uses: actions/checkout@v6
+
+      - name: 🛠️ Setup Node & Dependencies
         uses: ./.github/actions/setup-project
 
       - name: 🏗️ Compile Application
