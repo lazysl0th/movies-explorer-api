@@ -1,13 +1,14 @@
 const router = require('express').Router()
+
 const {
-	addMovieValidation,
-	deleteMovieValidation,
-} = require('../middlewares/validation')
-const {
-	getMovies,
-	addMovie,
-	deleteMovieByCredentials,
+  addMovie,
+  deleteMovieByCredentials,
+  getMovies,
 } = require('../controllers/movies')
+const {
+  addMovieValidation,
+  deleteMovieValidation,
+} = require('../middlewares/validation')
 
 router.get('/', getMovies)
 

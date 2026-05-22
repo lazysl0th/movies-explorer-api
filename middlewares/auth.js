@@ -1,23 +1,24 @@
 const jwt = require('jsonwebtoken')
-const Forbidden = require('../errors/forbidden')
+
 const { JWT_SECRET } = require('../config')
 const { FORBIDDEN } = require('../constant')
+const Forbidden = require('../errors/forbidden')
 
 module.exports = (req, res, next) => {
-	const { token } = req.cookies
+  const { token } = req.cookies
 
-	if (!token) {
-		throw new Forbidden(FORBIDDEN.text)
-	}
+  if (!token) {
+    throw new Forbidden(FORBIDDEN.text)
+  }
 
-	let payload
+  let payload
 
-	try {
-		payload = jwt.verify(token, JWT_SECRET)
-	} catch (err) {
-		throw new Forbidden(FORBIDDEN.text)
-	}
+  try {
+    payload = jwt.verify(token, JWT_SECRET)
+  } catch (err) {
+    throw new Forbidden(FORBIDDEN.text)
+  }
 
-	req.user = payload
-	return next()
+  req.user = payload
+  return next()
 }
