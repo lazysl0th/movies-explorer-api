@@ -13,6 +13,9 @@ jobs:
     name: Code Quality (Linting)
     runs-on: ubuntu-latest
     steps:
+      - name: 🔍 Clone Repository
+        uses: actions/checkout@v4
+        
       - name: 🛠️ Prepare Environment
         uses: ./.github/actions/setup-project
 
@@ -23,6 +26,9 @@ jobs:
     name: Automated Testing
     runs-on: ubuntu-latest
     steps:
+      - name: 🔍 Clone Repository
+        uses: actions/checkout@v4
+        
       - name: 🛠️ Prepare Environment
         uses: ./.github/actions/setup-project
 
@@ -33,6 +39,9 @@ jobs:
     name: Production Build Verification
     runs-on: ubuntu-latest
     steps:
+      - name: 🔍 Clone Repository
+        uses: actions/checkout@v4
+        
       - name: 🛠️ Prepare Environment
         uses: ./.github/actions/setup-project
 
