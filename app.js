@@ -13,6 +13,7 @@ const {
   DBHOST,
   DBPORT,
   DBNAME,
+  MONGODBURI,
 } = require('./config');
 
 const app = express();
@@ -25,7 +26,7 @@ app.use(limiter);
 
 app.use(cookieParser());
 
-mongoose.connect(`mongodb://${DBHOST}:${DBPORT}/${DBNAME}`, {
+mongoose.connect(`${MONGODBURI}`, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
