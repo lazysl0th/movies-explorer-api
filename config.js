@@ -7,6 +7,7 @@ const {
   DBHOST,
   DBPORT,
   DBNAME,
+  MONGODBURI,
 } = process.env;
 
 const config = {
@@ -15,7 +16,7 @@ const config = {
   DBHOST: NODE_ENV === 'production' && DBHOST ? DBHOST : 'localhost',
   DBPORT: NODE_ENV === 'production' && DBPORT ? DBPORT : 27017,
   DBNAME: NODE_ENV === 'production' && DBNAME ? DBNAME : 'moviesdb',
-
+  MONGODBURI: NODE_ENV === 'production' && MONGODBURI ? MONGODBURI : 'mongodb://localhost:27017/moviesdb',
 };
 
 module.exports = config;

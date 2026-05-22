@@ -13,6 +13,7 @@ const {
   DBHOST,
   DBPORT,
   DBNAME,
+  MONGODBURI,
 } = require('./config');
 
 const app = express();
@@ -25,7 +26,7 @@ app.use(limiter);
 
 app.use(cookieParser());
 
-mongoose.connect(`mongodb://${DBHOST}:${DBPORT}/${DBNAME}`, {
+mongoose.connect(`${MONGODBURI}`, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -44,6 +45,7 @@ app.use(errorLogger);
 app.use(errors());
 
 app.use((err, req, res, next) => {
+  console.log(err)
   const { statusCode = INTERNAL_SERVER_ERROR.statusCode, message } = err;
 
   res.status(statusCode).send({
