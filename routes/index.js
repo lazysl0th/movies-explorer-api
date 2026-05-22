@@ -1,13 +1,14 @@
 const router = require('express').Router()
-const usersRoutes = require('./users')
+
 const moviesRoutes = require('./movies')
-const { login, createUser, logout } = require('../controllers/users')
-const auth = require('../middlewares/auth')
-const NotFoundError = require('../errors/notFound')
+const usersRoutes = require('./users')
 const { NOT_FOUND } = require('../constant')
+const { createUser, login, logout } = require('../controllers/users')
+const NotFoundError = require('../errors/notFound')
+const auth = require('../middlewares/auth')
 const {
-	signinValidation,
-	signupValidationd,
+  signinValidation,
+  signupValidationd,
 } = require('../middlewares/validation')
 
 router.post('/signin', signinValidation, login)
@@ -21,8 +22,8 @@ router.use(auth)
 router.use('/users', usersRoutes)
 router.use('/movies', moviesRoutes)
 
-router.all('/*', (req, res, next) => {
-	next(new NotFoundError(NOT_FOUND.text))
+router.use((req, res, next) => {
+  next(new NotFoundError(NOT_FOUND.text))
 })
 
 module.exports = router
