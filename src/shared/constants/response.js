@@ -11,11 +11,11 @@ const response = {
   },
   UNAUTHORIZED: {
     statusCode: 401,
-    text: 'Неправильные почта или пароль',
+    text: 'Необходима авторизация',
   },
   FORBIDDEN: {
     statusCode: 403,
-    text: 'Необходима авторизация',
+    text: 'Доступ запрещен',
   },
   NOT_FOUND: {
     statusCode: 404,

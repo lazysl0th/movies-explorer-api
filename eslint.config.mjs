@@ -82,7 +82,13 @@ export default defineConfig([
     files: ['**/*.js', '**/*.ts'],
     rules: {
       'no-underscore-dangle': ['error', { allow: ['_id'] }],
-      'import-x/extensions': 'off',
+      'import-x/extensions': [
+        'error',
+        'ignorePackages',
+        { js: 'always', ts: 'never' },
+      ],
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/explicit-module-boundary-types': 'warn',
     },
   },
 ])

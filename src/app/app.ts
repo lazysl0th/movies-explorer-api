@@ -5,16 +5,16 @@ import helmet from 'helmet'
 import mongoose from 'mongoose'
 
 import router from './routes.js'
+import cors from '../shared/config/cors.js'
 import config from '../shared/config/env.js'
 import response from '../shared/constants/response.js'
-import cors from '../shared/middlewares/cors.js'
 import limiter from '../shared/middlewares/limiter.js'
 import { errorLogger, requestLogger } from '../shared/middlewares/logger.js'
 
 const { MONGODB_URI } = config
 const { INTERNAL_SERVER_ERROR } = response
 
-const createApp = () => {
+const createApp = (): any => {
   const app = express()
 
   app.use(helmet())
@@ -38,7 +38,7 @@ const createApp = () => {
 
   app.use(errors())
 
-  app.use((err, req, res, next) => {
+  app.use((err: any, req: any, res: any, next: any) => {
     console.log(err)
     const { statusCode = INTERNAL_SERVER_ERROR.statusCode, message } = err
 
