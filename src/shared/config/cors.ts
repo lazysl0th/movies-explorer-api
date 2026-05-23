@@ -1,6 +1,5 @@
-import cors from 'cors'
-
 import config from './env.js'
+import Forbidden from '../errors/forbidden.js'
 
 import type { CorsOptions } from 'cors'
 
@@ -11,7 +10,7 @@ const customOrigin: CorsOptions['origin'] = (origin, callback) => {
     callback(null, true)
     return
   }
-  callback(null, false)
+  callback(new Forbidden())
 }
 
 const corsOptions: CorsOptions = {
@@ -20,4 +19,4 @@ const corsOptions: CorsOptions = {
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
 }
 
-export default cors(corsOptions)
+export default corsOptions

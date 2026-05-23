@@ -5,11 +5,11 @@ import helmet from 'helmet'
 import mongoose from 'mongoose'
 
 import router from './routes.js'
-import cors from '../shared/config/cors.js'
 import config from '../shared/config/env.js'
 import response from '../shared/constants/response.js'
-import limiter from '../shared/middlewares/limiter.js'
+import cors from '../shared/middlewares/cors.js'
 import { errorLogger, requestLogger } from '../shared/middlewares/logger.js'
+import rateLimit from '../shared/middlewares/rateLimit.js'
 
 const { MONGODB_URI } = config
 const { INTERNAL_SERVER_ERROR } = response
@@ -21,11 +21,11 @@ const createApp = (): any => {
 
   app.use(cors)
 
-  app.use(limiter)
+  app.use(rateLimit)
 
   app.use(cookieParser())
 
-  mongoose.connect(`${MONGODB_URI}`)
+  mongoose.connect(MONGODB_URI)
 
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
