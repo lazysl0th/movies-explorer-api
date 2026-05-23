@@ -1,9 +1,13 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 
-const { BAD_REQUEST, FORBIDDEN, NOT_FOUND } = require('../constant')
-const Forbidden = require('../errors/forbidden')
-const NotFoundError = require('../errors/notFound')
+const {
+  BAD_REQUEST,
+  FORBIDDEN,
+  NOT_FOUND,
+} = require('../../shared/constants/response')
+const Forbidden = require('../../shared/errors/forbidden')
+const NotFoundError = require('../../shared/errors/notFound')
 
 const movieSchema = new mongoose.Schema({
   country: {

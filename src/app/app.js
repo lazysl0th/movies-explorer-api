@@ -4,12 +4,12 @@ const express = require('express')
 const helmet = require('helmet')
 const mongoose = require('mongoose')
 
-const { MONGODB_URI, PORT } = require('./config')
-const { INTERNAL_SERVER_ERROR } = require('./constant')
-const cors = require('./middlewares/cors')
-const { limiter } = require('./middlewares/limiter')
-const { errorLogger, requestLogger } = require('./middlewares/logger')
 const router = require('./routes')
+const { MONGODB_URI, PORT } = require('../shared/config/env')
+const { INTERNAL_SERVER_ERROR } = require('../shared/constants/response')
+const cors = require('../shared/middlewares/cors')
+const { limiter } = require('../shared/middlewares/limiter')
+const { errorLogger, requestLogger } = require('../shared/middlewares/logger')
 
 const app = express()
 
@@ -47,4 +47,4 @@ app.use((err, req, res, next) => {
   next()
 })
 
-app.listen(PORT)
+return app.listen(PORT)

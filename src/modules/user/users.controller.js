@@ -1,12 +1,18 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-const { JWT_SECRET } = require('../config')
-const { BAD_REQUEST, CONFLICT, CREATED, NOT_FOUND, OK } = require('../constant')
-const BadRequestError = require('../errors/badRequest')
-const Conflict = require('../errors/conflict')
-const NotFoundError = require('../errors/notFound')
-const User = require('../models/user')
+const User = require('./users.model')
+const { JWT_SECRET } = require('../../shared/config/env')
+const {
+  BAD_REQUEST,
+  CONFLICT,
+  CREATED,
+  NOT_FOUND,
+  OK,
+} = require('../../shared/constants/response')
+const BadRequestError = require('../../shared/errors/badRequest')
+const Conflict = require('../../shared/errors/conflict')
+const NotFoundError = require('../../shared/errors/notFound')
 
 module.exports.createUser = (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then((hash) =>
