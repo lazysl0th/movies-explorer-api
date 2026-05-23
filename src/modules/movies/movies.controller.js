@@ -1,8 +1,10 @@
-const Movie = require('./movie.model')
-const { BAD_REQUEST, CREATED, OK } = require('../../shared/constants/response')
-const BadRequestError = require('../../shared/errors/badRequest')
+import Movie from './movie.model.js'
+import response from '../../shared/constants/response.js'
+import BadRequestError from '../../shared/errors/badRequest.js'
 
-module.exports.addMovie = (req, res, next) => {
+const { CREATED, BAD_REQUEST, OK } = response
+
+export const addMovie = (req, res, next) => {
   const {
     country,
     director,
@@ -44,7 +46,7 @@ module.exports.addMovie = (req, res, next) => {
     })
 }
 
-module.exports.deleteMovieByCredentials = (req, res, next) => {
+export const deleteMovieByCredentials = (req, res, next) => {
   Movie.deleteMovieByCredentials(req.params.movieId, req.user._id)
     .then((movie) => res.status(OK.statusCode).send(movie))
     .catch((err) => {
@@ -54,7 +56,7 @@ module.exports.deleteMovieByCredentials = (req, res, next) => {
       return next(err)
     })
 }
-module.exports.getMovies = (req, res, next) => {
+export const getMovies = (req, res, next) => {
   Movie.find({})
     .populate('owner')
     .then((movies) => res.status(OK.statusCode).send(movies))

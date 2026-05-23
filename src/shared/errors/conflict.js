@@ -1,4 +1,6 @@
-const { CONFLICT } = require('../constants/response')
+import response from '../constants/response.js'
+
+const { CONFLICT } = response
 
 class Conflict extends Error {
   constructor(message) {
@@ -7,4 +9,4 @@ class Conflict extends Error {
   }
 }
 
-module.exports = Conflict
+export default Conflict

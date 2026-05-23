@@ -1,12 +1,12 @@
-const router = require('express').Router()
+import { Router } from 'express'
 
-const { getUserProfile, updateUserProfile } = require('./users.controller')
-const {
-  updateUserProfileValidation,
-} = require('../../shared/middlewares/validation')
+import { getUserProfile, updateUserProfile } from './users.controller.js'
+import { updateUserProfileValidation } from '../../shared/middlewares/validation.js'
+
+const router = Router()
 
 router.get('/me', getUserProfile)
 
 router.patch('/me', updateUserProfileValidation, updateUserProfile)
 
-module.exports = router
+export default router

@@ -1,4 +1,6 @@
-const { FORBIDDEN } = require('../constants/response')
+import response from '../constants/response.js'
+
+const { FORBIDDEN } = response
 
 class Forbidden extends Error {
   constructor(message) {
@@ -7,4 +9,4 @@ class Forbidden extends Error {
   }
 }
 
-module.exports = Forbidden
+export default Forbidden

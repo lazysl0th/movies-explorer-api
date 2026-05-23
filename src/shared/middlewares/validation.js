@@ -1,7 +1,9 @@
-const { celebrate, Joi } = require('celebrate')
-const validator = require('validator')
+import { celebrate, Joi } from 'celebrate'
+import validator from 'validator'
 
-const { BAD_REQUEST } = require('../constants/response')
+import response from '../constants/response.js'
+
+const { BAD_REQUEST } = response
 
 const validationUrl = (value) => {
   if (validator.isURL(value)) {
@@ -10,7 +12,7 @@ const validationUrl = (value) => {
   return BAD_REQUEST.text
 }
 
-module.exports.addMovieValidation = celebrate({
+export const addMovieValidation = celebrate({
   body: Joi.object().keys({
     country: Joi.string().required(),
     director: Joi.string().required(),
@@ -25,19 +27,21 @@ module.exports.addMovieValidation = celebrate({
     nameEN: Joi.string().required(),
   }),
 })
-module.exports.deleteMovieValidation = celebrate({
+
+export const deleteMovieValidation = celebrate({
   params: Joi.object().keys({
     movieId: Joi.string().required().hex().length(24),
   }),
 })
-module.exports.signinValidation = celebrate({
+
+export const signinValidation = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
 })
 
-module.exports.signupValidationd = celebrate({
+export const signupValidationd = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
@@ -45,7 +49,7 @@ module.exports.signupValidationd = celebrate({
   }),
 })
 
-module.exports.updateUserProfileValidation = celebrate({
+export const updateUserProfileValidation = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),

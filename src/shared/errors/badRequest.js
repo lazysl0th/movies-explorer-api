@@ -1,4 +1,6 @@
-const { BAD_REQUEST } = require('../constants/response')
+import response from '../constants/response.js'
+
+const { BAD_REQUEST } = response
 
 class BadRequestError extends Error {
   constructor(message) {
@@ -7,4 +9,4 @@ class BadRequestError extends Error {
   }
 }
 
-module.exports = BadRequestError
+export default BadRequestError

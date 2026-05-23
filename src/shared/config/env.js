@@ -1,4 +1,4 @@
-require('dotenv').config()
+import 'dotenv/config'
 
 const { NODE_ENV, PORT, JWT_SECRET, MONGODB_URI, FRONTEND_URL } = process.env
 
@@ -16,4 +16,4 @@ const config = {
       : 'http://localhost:3000',
 }
 
-module.exports = config
+export default config

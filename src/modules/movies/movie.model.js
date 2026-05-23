@@ -1,13 +1,11 @@
-const mongoose = require('mongoose')
-const validator = require('validator')
+import mongoose from 'mongoose'
+import validator from 'validator'
 
-const {
-  BAD_REQUEST,
-  FORBIDDEN,
-  NOT_FOUND,
-} = require('../../shared/constants/response')
-const Forbidden = require('../../shared/errors/forbidden')
-const NotFoundError = require('../../shared/errors/notFound')
+import response from '../../shared/constants/response.js'
+import Forbidden from '../../shared/errors/forbidden.js'
+import NotFoundError from '../../shared/errors/notFound.js'
+
+const { BAD_REQUEST, FORBIDDEN, NOT_FOUND } = response
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -92,4 +90,4 @@ movieSchema.statics.deleteMovieByCredentials =
     })
   }
 
-module.exports = mongoose.model('movie', movieSchema)
+export default mongoose.model('movie', movieSchema)

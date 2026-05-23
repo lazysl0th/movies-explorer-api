@@ -1,4 +1,6 @@
-const { NOT_FOUND } = require('../constants/response')
+import response from '../constants/response.js'
+
+const { NOT_FOUND } = response
 
 class NotFoundError extends Error {
   constructor(message) {
@@ -7,4 +9,4 @@ class NotFoundError extends Error {
   }
 }
 
-module.exports = NotFoundError
+export default NotFoundError
