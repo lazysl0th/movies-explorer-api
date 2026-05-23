@@ -4,11 +4,11 @@ const {
   addMovie,
   deleteMovieByCredentials,
   getMovies,
-} = require('../controllers/movies')
+} = require('./movies.controller')
 const {
   addMovieValidation,
   deleteMovieValidation,
-} = require('../middlewares/validation')
+} = require('../../shared/middlewares/validation')
 
 router.get('/', getMovies)
 

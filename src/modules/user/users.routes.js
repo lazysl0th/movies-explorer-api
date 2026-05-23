@@ -1,7 +1,9 @@
 const router = require('express').Router()
 
-const { getUserProfile, updateUserProfile } = require('../controllers/users')
-const { updateUserProfileValidation } = require('../middlewares/validation')
+const { getUserProfile, updateUserProfile } = require('./users.controller')
+const {
+  updateUserProfileValidation,
+} = require('../../shared/middlewares/validation')
 
 router.get('/me', getUserProfile)
 

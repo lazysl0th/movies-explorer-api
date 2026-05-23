@@ -1,4 +1,4 @@
-const { FRONTEND_URL } = require('../config')
+const { FRONTEND_URL } = require('../config/env')
 
 const allowedCors = [FRONTEND_URL]
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE'

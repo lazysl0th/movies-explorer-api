@@ -1,7 +1,7 @@
 const { celebrate, Joi } = require('celebrate')
 const validator = require('validator')
 
-const { BAD_REQUEST } = require('../constant')
+const { BAD_REQUEST } = require('../constants/response')
 
 const validationUrl = (value) => {
   if (validator.isURL(value)) {

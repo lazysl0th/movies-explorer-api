@@ -1,6 +1,6 @@
-const { BAD_REQUEST, CREATED, OK } = require('../constant')
-const BadRequestError = require('../errors/badRequest')
-const Movie = require('../models/movie')
+const Movie = require('./movie.model')
+const { BAD_REQUEST, CREATED, OK } = require('../../shared/constants/response')
+const BadRequestError = require('../../shared/errors/badRequest')
 
 module.exports.addMovie = (req, res, next) => {
   const {

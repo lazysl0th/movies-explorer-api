@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 
-const { JWT_SECRET } = require('../config')
-const { FORBIDDEN } = require('../constant')
+const { JWT_SECRET } = require('../config/env')
+const { FORBIDDEN } = require('../constants/response')
 const Forbidden = require('../errors/forbidden')
 
 module.exports = (req, res, next) => {
