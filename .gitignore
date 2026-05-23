@@ -37,6 +37,7 @@ npm-debug.log*
 
 # production
 /build
+/dist
 
 # testing
 /coverage
