@@ -4,7 +4,7 @@ import express from 'express'
 import helmet from 'helmet'
 import mongoose from 'mongoose'
 
-import router from './routes.js'
+import AppRouter from './router.js'
 import config from '../shared/config/env.js'
 import response from '../shared/constants/response.js'
 import cors from '../shared/middlewares/cors.js'
@@ -32,7 +32,8 @@ const createApp = (): any => {
 
   app.use(requestLogger)
 
-  app.use(router)
+  const appRouter = new AppRouter()
+  app.use(appRouter.requestHandler)
 
   app.use(errorLogger)
 
