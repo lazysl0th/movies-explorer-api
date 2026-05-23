@@ -1,50 +1,57 @@
-const { errors } = require('celebrate')
-const cookieParser = require('cookie-parser')
-const express = require('express')
-const helmet = require('helmet')
-const mongoose = require('mongoose')
+import { errors } from 'celebrate'
+import cookieParser from 'cookie-parser'
+import express from 'express'
+import helmet from 'helmet'
+import mongoose from 'mongoose'
 
-const router = require('./routes')
-const { MONGODB_URI, PORT } = require('../shared/config/env')
-const { INTERNAL_SERVER_ERROR } = require('../shared/constants/response')
-const cors = require('../shared/middlewares/cors')
-const { limiter } = require('../shared/middlewares/limiter')
-const { errorLogger, requestLogger } = require('../shared/middlewares/logger')
+import router from './routes.js'
+import config from '../shared/config/env.js'
+import response from '../shared/constants/response.js'
+import cors from '../shared/middlewares/cors.js'
+import limiter from '../shared/middlewares/limiter.js'
+import { errorLogger, requestLogger } from '../shared/middlewares/logger.js'
 
-const app = express()
+const { MONGODB_URI } = config
+const { INTERNAL_SERVER_ERROR } = response
 
-app.use(helmet())
+const createApp = () => {
+  const app = express()
 
-app.use(cors)
+  app.use(helmet())
 
-app.use(limiter)
+  app.use(cors)
 
-app.use(cookieParser())
+  app.use(limiter)
 
-mongoose.connect(`${MONGODB_URI}`)
+  app.use(cookieParser())
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+  mongoose.connect(`${MONGODB_URI}`)
 
-app.use(requestLogger)
+  app.use(express.json())
+  app.use(express.urlencoded({ extended: true }))
 
-app.use(router)
+  app.use(requestLogger)
 
-app.use(errorLogger)
+  app.use(router)
 
-app.use(errors())
+  app.use(errorLogger)
 
-app.use((err, req, res, next) => {
-  console.log(err)
-  const { statusCode = INTERNAL_SERVER_ERROR.statusCode, message } = err
+  app.use(errors())
 
-  res.status(statusCode).send({
-    message:
-      statusCode === INTERNAL_SERVER_ERROR.statusCode
-        ? INTERNAL_SERVER_ERROR.text
-        : message,
+  app.use((err, req, res, next) => {
+    console.log(err)
+    const { statusCode = INTERNAL_SERVER_ERROR.statusCode, message } = err
+
+    res.status(statusCode).send({
+      message:
+        statusCode === INTERNAL_SERVER_ERROR.statusCode
+          ? INTERNAL_SERVER_ERROR.text
+          : message,
+    })
+    next()
   })
-  next()
-})
 
-return app.listen(PORT)
+  return app
+}
+
+export default createApp

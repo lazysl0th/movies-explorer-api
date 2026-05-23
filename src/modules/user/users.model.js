@@ -1,9 +1,11 @@
-const bcrypt = require('bcryptjs')
-const mongoose = require('mongoose')
-const validator = require('validator')
+import bcrypt from 'bcryptjs'
+import mongoose from 'mongoose'
+import validator from 'validator'
 
-const { BAD_REQUEST, UNAUTHORIZED } = require('../../shared/constants/response')
-const Unauthorized = require('../../shared/errors/unauthorized')
+import response from '../../shared/constants/response.js'
+import Unauthorized from '../../shared/errors/unauthorized.js'
+
+const { BAD_REQUEST, UNAUTHORIZED } = response
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -56,4 +58,4 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials(
     .catch()
 }
 
-module.exports = mongoose.model('user', userSchema)
+export default mongoose.model('user', userSchema)

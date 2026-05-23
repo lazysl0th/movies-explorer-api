@@ -1,14 +1,16 @@
-const router = require('express').Router()
+import { Router } from 'express'
 
-const {
+import {
   addMovie,
   deleteMovieByCredentials,
   getMovies,
-} = require('./movies.controller')
-const {
+} from './movies.controller.js'
+import {
   addMovieValidation,
   deleteMovieValidation,
-} = require('../../shared/middlewares/validation')
+} from '../../shared/middlewares/validation.js'
+
+const router = Router()
 
 router.get('/', getMovies)
 
@@ -16,4 +18,4 @@ router.post('/', addMovieValidation, addMovie)
 
 router.delete('/:movieId', deleteMovieValidation, deleteMovieByCredentials)
 
-module.exports = router
+export default router

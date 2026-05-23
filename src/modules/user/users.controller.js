@@ -1,20 +1,17 @@
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 
-const User = require('./users.model')
-const { JWT_SECRET } = require('../../shared/config/env')
-const {
-  BAD_REQUEST,
-  CONFLICT,
-  CREATED,
-  NOT_FOUND,
-  OK,
-} = require('../../shared/constants/response')
-const BadRequestError = require('../../shared/errors/badRequest')
-const Conflict = require('../../shared/errors/conflict')
-const NotFoundError = require('../../shared/errors/notFound')
+import User from './users.model.js'
+import config from '../../shared/config/env.js'
+import response from '../../shared/constants/response.js'
+import BadRequestError from '../../shared/errors/badRequest.js'
+import Conflict from '../../shared/errors/conflict.js'
+import NotFoundError from '../../shared/errors/notFound.js'
 
-module.exports.createUser = (req, res, next) => {
+const { JWT_SECRET } = config
+const { BAD_REQUEST, CONFLICT, CREATED, NOT_FOUND, OK } = response
+
+export const createUser = (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then((hash) =>
     User.create({
       name: req.body.name,
@@ -35,7 +32,7 @@ module.exports.createUser = (req, res, next) => {
       }),
   )
 }
-module.exports.getUserProfile = (req, res, next) => {
+export const getUserProfile = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
@@ -51,7 +48,7 @@ module.exports.getUserProfile = (req, res, next) => {
     })
 }
 
-module.exports.login = (req, res, next) => {
+export const login = (req, res, next) => {
   const { email, password } = req.body
 
   return User.findUserByCredentials(email, password)
@@ -70,9 +67,9 @@ module.exports.login = (req, res, next) => {
     .catch(next)
 }
 
-module.exports.logout = (req, res) =>
+export const logout = (req, res) =>
   res.status(OK.statusCode).clearCookie('token').send({})
-module.exports.updateUserProfile = (req, res, next) => {
+export const updateUserProfile = (req, res, next) => {
   const { name, email } = req.body
 
   User.findByIdAndUpdate(

@@ -1,10 +1,13 @@
-const jwt = require('jsonwebtoken')
+import jwt from 'jsonwebtoken'
 
-const { JWT_SECRET } = require('../config/env')
-const { FORBIDDEN } = require('../constants/response')
-const Forbidden = require('../errors/forbidden')
+import config from '../config/env.js'
+import response from '../constants/response.js'
+import Forbidden from '../errors/forbidden.js'
 
-module.exports = (req, res, next) => {
+const { JWT_SECRET } = config
+const { FORBIDDEN } = response
+
+const auth = (req, _, next) => {
   const { token } = req.cookies
 
   if (!token) {
@@ -22,3 +25,5 @@ module.exports = (req, res, next) => {
   req.user = payload
   return next()
 }
+
+export default auth

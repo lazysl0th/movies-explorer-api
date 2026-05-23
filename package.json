@@ -3,9 +3,10 @@
   "version": "1.2.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "tsx watch src/app/app.js",
-    "start": "node dist/app/app.js",
+    "dev": "tsx watch src/main.js",
+    "start": "node dist/main.js",
     "test": "",
     "build": "tsc",
     "lint": "eslint --fix",

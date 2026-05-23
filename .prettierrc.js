@@ -1,9 +1,0 @@
-module.exports = {
-  semi: false,
-  singleQuote: true,
-  jsxSingleQuote: true,
-  printWidth: 80,
-  useTabs: false,
-  tabWidth: 2,
-  endOfLine: 'lf',
-}

@@ -1,4 +1,6 @@
-const { UNAUTHORIZED } = require('../constants/response')
+import response from '../constants/response.js'
+
+const { UNAUTHORIZED } = response
 
 class Unauthorized extends Error {
   constructor(message) {
@@ -7,4 +9,4 @@ class Unauthorized extends Error {
   }
 }
 
-module.exports = Unauthorized
+export default Unauthorized

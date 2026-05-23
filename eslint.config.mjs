@@ -82,6 +82,7 @@ export default defineConfig([
     files: ['**/*.js', '**/*.ts'],
     rules: {
       'no-underscore-dangle': ['error', { allow: ['_id'] }],
+      'import-x/extensions': 'off',
     },
   },
 ])

@@ -1,19 +1,18 @@
-const router = require('express').Router()
+import { Router } from 'express'
 
-const moviesRoutes = require('../modules/movies/movies.routes')
-const {
-  createUser,
-  login,
-  logout,
-} = require('../modules/user/users.controller')
-const usersRoutes = require('../modules/user/users.routes')
-const { NOT_FOUND } = require('../shared/constants/response')
-const NotFoundError = require('../shared/errors/notFound')
-const auth = require('../shared/middlewares/auth')
-const {
+import moviesRoutes from '../modules/movies/movies.routes.js'
+import { createUser, login, logout } from '../modules/user/users.controller.js'
+import usersRoutes from '../modules/user/users.routes.js'
+import response from '../shared/constants/response.js'
+import NotFoundError from '../shared/errors/notFound.js'
+import auth from '../shared/middlewares/auth.js'
+import {
   signinValidation,
   signupValidationd,
-} = require('../shared/middlewares/validation')
+} from '../shared/middlewares/validation.js'
+
+const router = Router()
+const { NOT_FOUND } = response
 
 router.post('/signin', signinValidation, login)
 
@@ -30,4 +29,4 @@ router.use((req, res, next) => {
   next(new NotFoundError(NOT_FOUND.text))
 })
 
-module.exports = router
+export default router
