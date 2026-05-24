@@ -6,14 +6,15 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/main.js",
-    "start": "node dist/main.js",
-    "test": "",
-    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "lint": "eslint --fix",
     "format": "prettier --write .",
     "check": "npm run lint && npm run format",
     "commit": "npm run check && cz",
-    "prepare": "husky"
+    "prepare": "husky",
+    "build": "tsc",
+    "start": "node dist/main.js"
   },
   "lint-staged": {
     "*.{js,ts}": [
@@ -41,6 +42,7 @@
   },
   "homepage": "https://github.com/lazysl0th/movies-explorer-api#readme",
   "dependencies": {
+    "@godaddy/terminus": "^4.12.1",
     "bcryptjs": "^3.0.3",
     "celebrate": "^15.0.3",
     "cookie-parser": "^1.4.7",
@@ -62,6 +64,7 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.9.1",
+    "@types/supertest": "^7.2.0",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.39.4",
@@ -75,8 +78,10 @@
     "nodemon": "^3.1.14",
     "prettier": "^3.8.3",
     "standard-version": "^9.5.0",
+    "supertest": "^7.2.2",
     "tsx": "^4.22.3",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.7"
   },
   "overrides": {
     "lodash": "^4.17.24",

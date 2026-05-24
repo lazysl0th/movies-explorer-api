@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
-import User from './users.model.js'
+import User from './user.model.js'
 import config from '../../shared/config/env.js'
 import response from '../../shared/constants/response.js'
 import BadRequestError from '../../shared/errors/badRequest.js'

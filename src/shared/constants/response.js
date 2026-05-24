@@ -1,6 +1,7 @@
 const response = {
   OK: {
     statusCode: 200,
+    text: 'OK',
   },
   CREATED: {
     statusCode: 201,

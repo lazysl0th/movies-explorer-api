@@ -4,7 +4,7 @@ import {
   addMovie,
   deleteMovieByCredentials,
   getMovies,
-} from './movies.controller.js'
+} from './movie.controller.js'
 import {
   addMovieValidation,
   deleteMovieValidation,

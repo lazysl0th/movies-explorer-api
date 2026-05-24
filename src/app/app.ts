@@ -4,22 +4,24 @@ import express from 'express'
 import helmet from 'helmet'
 import mongoose from 'mongoose'
 
+import cors from './middlewares/cors.middleware.js'
 import config from '../shared/config/env.js'
 import response from '../shared/constants/response.js'
-import cors from '../shared/middlewares/cors.js'
 import { errorLogger, requestLogger } from '../shared/middlewares/logger.js'
-import rateLimit from '../shared/middlewares/rateLimit.js'
+import rateLimit from '../shared/middlewares/rate-limit.middleware.js'
 
 import type { Express } from 'express'
 
-import type { IApp } from '../shared/base/app.js'
-import type { IRouter } from '../shared/base/router.js'
+import type { IApp } from '../shared/base/app.base.js'
+import type { IRouter } from '../shared/base/router.base.js'
 
 const { MONGODB_URI } = config
 const { INTERNAL_SERVER_ERROR } = response
 
 export default class App implements IApp {
-  private readonly express: Express
+  public readonly express: Express
+
+  private isAvailable = false
 
   constructor(private readonly appRouter: IRouter) {
     this.express = express()
@@ -39,14 +41,28 @@ export default class App implements IApp {
     this.express.use(App.errorHandler)
   }
 
-  async start(port: number | string): Promise<void> {
+  async start(): Promise<void> {
     try {
       await mongoose.connect(MONGODB_URI)
       this.initMiddlewares()
-      this.express.listen(port)
+      this.isAvailable = true
     } catch (err) {
       console.error('Failed to start the application:', err)
     }
+  }
+
+  async stop(): Promise<void> {
+    this.isAvailable = false
+    try {
+      await mongoose.disconnect()
+      console.log('Application stopped safely')
+    } catch (err) {
+      console.error('Error during stop:', err)
+    }
+  }
+
+  healthCheck(): boolean {
+    return this.isAvailable
   }
 
   private static errorHandler(err: any, _: any, res: any, next: any) {
