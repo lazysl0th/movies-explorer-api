@@ -7,7 +7,7 @@ import mongoose from 'mongoose'
 import cors from './middlewares/cors.middleware.js'
 import config from '../shared/config/env.js'
 import response from '../shared/constants/response.js'
-import { errorLogger, requestLogger } from '../shared/middlewares/logger.js'
+import { errorLogger, requestLogger } from './middlewares/logger.middleware.js'
 import rateLimit from '../shared/middlewares/rate-limit.middleware.js'
 
 import type { Express } from 'express'
