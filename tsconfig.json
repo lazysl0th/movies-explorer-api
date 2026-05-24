@@ -10,6 +10,8 @@
     "module": "nodenext",
     "moduleResolution": "NodeNext",
     "target": "esnext",
+    "emitDeclarationOnly": false,
+    "noEmit": false,
     // For nodejs:
     "lib": ["esnext"],
     "allowJs": true,
@@ -20,7 +22,6 @@
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
@@ -41,6 +42,6 @@
     "moduleDetection": "force",
     "skipLibCheck": true
   },
-  "include": ["src/**/*"],
+  "include": ["./src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

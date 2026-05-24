@@ -1,5 +1,5 @@
-import config from './env.js'
-import Forbidden from '../errors/forbidden.js'
+import config from '../../shared/config/env.js'
+import Forbidden from '../../shared/errors/forbidden.js'
 
 import type { CorsOptions } from 'cors'
 

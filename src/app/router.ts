@@ -1,8 +1,8 @@
 import { Router } from 'express'
 
-import moviesRoutes from '../modules/movies/movies.routes.js'
-import { createUser, login, logout } from '../modules/user/users.controller.js'
-import usersRoutes from '../modules/user/users.routes.js'
+import moviesRoutes from '../modules/movie/movie.router.js'
+import { createUser, login, logout } from '../modules/user/user.controller.js'
+import usersRoutes from '../modules/user/user.router.js'
 import NotFoundError from '../shared/errors/notFound.js'
 import auth from '../shared/middlewares/auth.js'
 import {
@@ -12,7 +12,7 @@ import {
 
 import type { RequestHandler } from 'express'
 
-import type { IRouter } from '../shared/base/router.js'
+import type { IRouter } from '../shared/base/router.base.js'
 
 export default class AppRouter implements IRouter {
   private readonly router: Router

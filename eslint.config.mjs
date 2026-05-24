@@ -90,5 +90,12 @@ export default defineConfig([
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/explicit-module-boundary-types': 'warn',
     },
+    languageOptions: {
+      parserOptions: {
+        projectService: {
+          allowDefaultProject: ['vitest.config.ts'],
+        },
+      },
+    },
   },
 ])
