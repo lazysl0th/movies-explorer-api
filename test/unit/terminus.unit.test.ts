@@ -19,7 +19,7 @@ describe('Terminus configuration', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {})
   })
 
-  describe('Health check', () => {
+  describe('health check', () => {
     it('should return true', async () => {
       const options = getTerminusOptions(fakeApp)
       const handler = options.healthChecks?.['/healthz']

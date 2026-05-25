@@ -12,6 +12,7 @@ import js from '@eslint/js'
 import { defineConfig } from 'eslint/config'
 import { configs, plugins, rules } from 'eslint-config-airbnb-extended'
 import { rules as prettierConfigRules } from 'eslint-config-prettier'
+import eslintPluginBoundaries from 'eslint-plugin-boundaries'
 import prettierPlugin from 'eslint-plugin-prettier'
 
 const gitignorePath = path.resolve('.', '.gitignore')
@@ -79,6 +80,30 @@ export default defineConfig([
   ...prettierConfig,
   {
     name: 'backend/custom-rules',
+    plugins: {
+      boundaries: eslintPluginBoundaries,
+    },
+    settings: {
+      'import/resolver': {
+        typescript: true,
+        node: true,
+      },
+      'boundaries/elements': [
+        {
+          type: 'app',
+          pattern: 'src/app/**/*',
+        },
+        {
+          type: 'module',
+          pattern: 'src/modules/*/**/*', // например: src/modules/user/components/...
+          mode: 'folder', // помогает плагину понять, где корень элемента
+        },
+        {
+          type: 'shared',
+          pattern: 'src/shared/**/*',
+        },
+      ],
+    },
     files: ['**/*.js', '**/*.ts'],
     rules: {
       'no-underscore-dangle': ['error', { allow: ['_id'] }],
@@ -89,6 +114,64 @@ export default defineConfig([
       ],
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/explicit-module-boundary-types': 'warn',
+      'boundaries/dependencies': [
+        'error',
+        {
+          default: 'disallow',
+          rules: [
+            // === СЛОЙ APP ===
+            {
+              from: { type: 'app' },
+              allow: [
+                { to: { type: 'app' } },
+                { to: { type: 'module', internalPath: 'index.{ts,js}' } },
+                { to: { type: 'infrastructure' } },
+                { to: { type: 'shared' } },
+              ],
+            },
+
+            // === СЛОЙ MODULE ===
+            // 1. Разрешаем модулям импортировать файлы ИЗ СЕБЯ ЖЕ (произвольные файлы)
+            {
+              from: { type: 'module' },
+              allow: [
+                { to: { type: 'module' } }, // Временный оверрайд: ниже мы ограничим чужие модули
+                { to: { type: 'infrastructure' } },
+                { to: { type: 'shared' } },
+              ],
+            },
+            // 2. А теперь ЗАПРЕЩАЕМ импорт из ЧУЖИХ модулей в обход index.ts
+            {
+              from: { type: 'module' },
+              disallow: [
+                {
+                  to: {
+                    type: 'module',
+                    internalPath: '!index.{ts,js}', // Если путь НЕ index.ts — запрещено
+                  },
+                },
+              ],
+              // Важно: этот disallow сработает для межмодульных связей,
+              // если у вас в settings правильно настроен mode: 'folder'
+            },
+
+            // === СЛОЙ INFRASTRUCTURE ===
+            {
+              from: { type: 'infrastructure' },
+              allow: [
+                { to: { type: 'infrastructure' } },
+                { to: { type: 'shared' } },
+              ],
+            },
+
+            // === СЛОЙ SHARED ===
+            {
+              from: { type: 'shared' },
+              allow: [{ to: { type: 'shared' } }],
+            },
+          ],
+        },
+      ],
     },
     languageOptions: {
       parserOptions: {

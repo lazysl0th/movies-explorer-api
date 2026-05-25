@@ -12,6 +12,8 @@ import rateLimit from '../shared/middlewares/rate-limit.middleware.js'
 
 import type { Express } from 'express'
 
+import type { IDBModule } from '@shared/base/db.base.js'
+
 import type { IApp } from '../shared/base/app.base.js'
 import type { IRouter } from '../shared/base/router.base.js'
 
@@ -22,7 +24,10 @@ export default class App implements IApp {
 
   private isAvailable = false
 
-  constructor(private readonly appRouter: IRouter) {
+  constructor(
+    private readonly appRouter: IRouter,
+    private readonly dbModule: IDBModule,
+  ) {
     this.express = express()
   }
 
@@ -42,8 +47,8 @@ export default class App implements IApp {
 
   async start(): Promise<void> {
     try {
-      await mongoose.connect(MONGODB_URI)
       this.initMiddlewares()
+      await this.dbModule.connects()
       this.isAvailable = true
     } catch (err) {
       console.error('Failed to start the application:', err)
@@ -53,7 +58,7 @@ export default class App implements IApp {
   async stop(): Promise<void> {
     this.isAvailable = false
     try {
-      await mongoose.disconnect()
+      await this.dbModule.disconnects()
       console.log('Application stopped safely')
     } catch (err) {
       console.error('Error during stop:', err)

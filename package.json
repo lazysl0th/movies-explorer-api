@@ -13,7 +13,7 @@
     "check": "npm run lint && npm run format",
     "commit": "npm run check && cz",
     "prepare": "husky",
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "start": "node dist/main.js"
   },
   "lint-staged": {
@@ -70,6 +70,7 @@
     "eslint": "^9.39.4",
     "eslint-config-airbnb-extended": "^3.1.0",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-boundaries": "^6.0.2",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.5",
@@ -79,6 +80,7 @@
     "prettier": "^3.8.3",
     "standard-version": "^9.5.0",
     "supertest": "^7.2.2",
+    "tsc-alias": "^1.8.17",
     "tsx": "^4.22.3",
     "typescript": "^6.0.3",
     "vitest": "^4.1.7"
