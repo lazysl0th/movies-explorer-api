@@ -2,7 +2,7 @@ import type {
   IDBModule,
   IDBService,
   TCheckConnectionsResult,
-} from '../../shared/base/db.base.js'
+} from '../../app/interfaces/services/IDBService.js'
 
 export default class Database implements IDBModule {
   constructor(private readonly mongoose: IDBService) {}

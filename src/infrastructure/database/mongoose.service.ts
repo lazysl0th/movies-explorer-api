@@ -1,8 +1,11 @@
 import mongoose from 'mongoose'
 
-import DB_LOGS from '@shared/constants/db-logs.constants.js'
+import DB_LOGS from '@infrastructure/constants/db-logs.constants.js'
 
-import type { IDBService, TDBServiceName } from '../../shared/base/db.base.js'
+import type {
+  IDBService,
+  TDBServiceName,
+} from '../../app/interfaces/services/IDBService.js'
 
 export default class Mongoose implements IDBService {
   public readonly serviceName: TDBServiceName = 'Mongoose'
