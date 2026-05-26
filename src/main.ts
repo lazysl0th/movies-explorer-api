@@ -2,21 +2,23 @@ import http from 'node:http'
 
 import { createTerminus } from '@godaddy/terminus'
 
+import getTerminusOptions from '@infrastructure/config/terminus.config.js'
 import Database from '@infrastructure/database/database.module.js'
 import Mongoose from '@infrastructure/database/mongoose.service.js'
 
-import App from './app/app.js'
-import getTerminusOptions from './app/config/terminus.config.js'
-import AppRouter from './app/router.js'
+import config from './infrastructure/config/env.js'
+import AuthRouter from './infrastructure/http/routes/authRoutes.js'
+import AppRouter from './infrastructure/http/routes/indexRoutes.js'
+import App from './infrastructure/http/server.js'
 import {
   handleCriticalError,
   handleListenServer,
   handleServerError,
-} from './app/utils.js'
-import config from './shared/config/env.js'
+} from './infrastructure/utils/utils.js'
 
 function bootstrap() {
-  const appRouter = new AppRouter()
+  const authRouter = new AuthRouter()
+  const appRouter = new AppRouter(authRouter)
   const mongoose = new Mongoose(config.MONGODB_URI)
   const dbModule = new Database(mongoose)
 

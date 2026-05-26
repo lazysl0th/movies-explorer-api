@@ -6,13 +6,12 @@ export default defineConfig({
   resolve: {
     alias: {
       '@app': path.resolve('.', 'src/app'),
-      '@modules': path.resolve('.', 'src/modules'),
+      '@domain': path.resolve('.', 'src/domain'),
       '@infrastructure': path.resolve('.', 'src/infrastructure'),
-      '@shared': path.resolve('.', 'src/shared'),
     },
   },
   test: {
-    include: ['./test/**/*.test.ts', './test/**/*.spec.ts'],
+    include: ['./tests/**/*.test.ts', './tests/**/*.spec.ts'],
     environment: 'node',
   },
 })
