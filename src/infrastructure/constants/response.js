@@ -1,34 +1,34 @@
 const response = {
   OK: {
     statusCode: 200,
-    text: 'OK',
+    text: 'Ok',
   },
   CREATED: {
     statusCode: 201,
   },
   BAD_REQUEST: {
     statusCode: 400,
-    text: 'Переданы некорректные данные',
+    text: 'Invalid data provided',
   },
   UNAUTHORIZED: {
     statusCode: 401,
-    text: 'Необходима авторизация',
+    text: 'Authorization required',
   },
   FORBIDDEN: {
     statusCode: 403,
-    text: 'Доступ запрещен',
+    text: 'Access denied',
   },
   NOT_FOUND: {
     statusCode: 404,
-    text: 'Ничего не найдено',
+    text: 'Nothing found',
   },
   CONFLICT: {
     statusCode: 409,
-    text: 'Пользователь с таким email уже существует',
+    text: 'A user with this email already exists',
   },
   INTERNAL_SERVER_ERROR: {
     statusCode: 500,
-    text: 'На сервере произошла ошибка',
+    text: 'An error occurred on the server',
   },
 }
 

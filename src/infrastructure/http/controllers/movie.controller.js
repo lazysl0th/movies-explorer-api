@@ -1,6 +1,6 @@
 import BadRequestError from '../../../domain/errors/badRequest.js'
 import response from '../../constants/response.js'
-import Movie from '../../database/models/movie.model.js'
+import Movie from '../../persistence/mongodb/movie.schema.js'
 
 const { CREATED, BAD_REQUEST, OK } = response
 

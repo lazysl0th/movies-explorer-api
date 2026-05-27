@@ -3,7 +3,7 @@ import APP_LOGS from '../constants/app-logs.constants.js'
 
 import type { Server } from 'node:http'
 
-export const handleServerError = (
+export const handlerServerError = (
   error: NodeJS.ErrnoException,
   server: Server,
 ) => {
@@ -19,10 +19,10 @@ export const handleServerError = (
   server.close()
 }
 
-export const handleListenServer = () =>
+export const handlerListenServer = () =>
   console.info(APP_LOGS.SERVER_RUNNING(config.PORT))
 
-export const handleCriticalError = (err: Error) => {
+export const handlerCriticalError = (err: Error) => {
   console.error({ err }, APP_LOGS.CRITICAL_ERROR_ENCOUNTERED)
   process.emit('SIGTERM')
 }

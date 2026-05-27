@@ -14,7 +14,8 @@ export default class AppRouter implements IRouter {
   private readonly router: Router
 
   constructor(
-    private readonly authRouter: IRouter,
+    private readonly DocRoutes: Router,
+    private readonly authRoutes: Router,
     private readonly usersRouter?: IRouter,
     private readonly moviesRouter?: IRouter,
   ) {
@@ -23,7 +24,8 @@ export default class AppRouter implements IRouter {
   }
 
   private initializeRoutes(): void {
-    this.router.post('/auth', this.authRouter.requestHandler)
+    this.router.use('/', this.authRoutes)
+    this.router.use('/api-docs', this.DocRoutes)
     this.router.use(auth)
     this.router.use('/users', usersRoutes)
     this.router.use('/movies', moviesRoutes)

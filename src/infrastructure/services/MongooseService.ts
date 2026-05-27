@@ -7,7 +7,7 @@ import type {
   TDBServiceName,
 } from '../../app/interfaces/services/IDBService.js'
 
-export default class Mongoose implements IDBService {
+export default class MongooseService implements IDBService {
   public readonly serviceName: TDBServiceName = 'Mongoose'
 
   private readonly mongooseConnection = mongoose.connection
