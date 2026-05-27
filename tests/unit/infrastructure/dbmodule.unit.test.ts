@@ -1,13 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import Database from '@infrastructure/database/database.module.js'
+import Database from '@infrastructure/persistence/database.module.js'
+
+import type { Mocked } from 'vitest'
 
 import type {
   IDBModule,
   IDBService,
   TCheckConnectionsResult,
-} from '@shared/base/db.base.js'
-import type { Mocked } from 'vitest'
+} from '@app/interfaces/services/IDBService.js'
 
 describe('chech DB module', () => {
   let fakeIDBService: Mocked<IDBService>

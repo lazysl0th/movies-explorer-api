@@ -6,7 +6,7 @@ import helmet from 'helmet'
 import rateLimitMiddleware from '@infrastructure/http/middleware/rate-limit.middleware.js'
 
 import cors from './middleware/cors.middleware.js'
-import errorHandler from './middleware/error-handler.middleware.js'
+import errorHandler from './middleware/errors/errorHandler.js'
 import { errorLogger, requestLogger } from './middleware/logger.middleware.js'
 
 import type { Express } from 'express'

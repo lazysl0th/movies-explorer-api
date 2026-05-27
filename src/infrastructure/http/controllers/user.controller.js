@@ -6,7 +6,7 @@ import Conflict from '../../../domain/errors/conflict.js'
 import NotFoundError from '../../../domain/errors/notFound.js'
 import config from '../../config/env.js'
 import response from '../../constants/response.js'
-import User from '../../database/models/user.model.js'
+import User from '../../persistence/mongodb/user.schema.js'
 
 const { JWT_SECRET } = config
 const { BAD_REQUEST, CONFLICT, CREATED, NOT_FOUND, OK } = response

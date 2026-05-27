@@ -4,8 +4,8 @@ import config from './env.js'
 import APP_LOGS from '../constants/app-logs.constants.js'
 
 import type { TerminusOptions } from '@godaddy/terminus'
-import type { TTerminusApp } from '@app/interfaces/base/app.js'
 
+import type { TTerminusApp } from '@app/interfaces/base/app.js'
 
 const onSignalHandler = async (app: TTerminusApp): Promise<void> => {
   console.info(APP_LOGS.CLEANUP_START)
