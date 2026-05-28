@@ -68,6 +68,22 @@ const authRoutesJson: Record<TAuthFullRoutesValues, ZodOpenApiPathItemObject> =
         },
       },
     },
+    [API_ROUTES.auth.signout]: {
+      post: {
+        tags: ['Auth'],
+        summary: 'User Logout',
+        description:
+          'Logs out the current user by invalidating their session or JWT token.',
+        responses: {
+          [HttpStatusCode.Ok]: {
+            description: 'User successfully logged out.',
+          },
+          [HttpStatusCode.Unauthorized]: {
+            description: 'Unauthorized. The user is not logged in.',
+          },
+        },
+      },
+    },
   }
 
 export default authRoutesJson

@@ -6,6 +6,7 @@ import type { TAuthValidations } from './types.js'
 const authValidations: TAuthValidations = {
   signin: validateBody(signinSchema),
   signup: validateBody(signupSchema),
+  signout: validateBody(),
 }
 
 export default authValidations

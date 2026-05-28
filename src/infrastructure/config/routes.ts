@@ -11,11 +11,13 @@ const BASE_ROUTES = {
 export const AUTH_ROUTES = {
   signin: '/signin',
   signup: '/signup',
+  signout: '/signout',
 } as const
 
 export const API_ROUTES = {
   auth: {
     signin: `${BASE_ROUTES.auth}${AUTH_ROUTES.signin}`,
     signup: `${BASE_ROUTES.auth}${AUTH_ROUTES.signup}`,
+    signout: `${BASE_ROUTES.auth}${AUTH_ROUTES.signout}`,
   },
 } as const satisfies TRoutesMap

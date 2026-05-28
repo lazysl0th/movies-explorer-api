@@ -2,9 +2,6 @@ import { Router } from 'express'
 
 import { AUTH_ROUTES } from '@infrastructure/config/routes.js'
 
-import { createUser, logout } from '../../controllers/user.controller.js'
-import { signupValidationd } from '../../middleware/validation.js'
-
 import type AuthController from './AuthController.js'
 import type { TAuthValidations } from './types.js'
 
@@ -23,7 +20,7 @@ const createAuthRoutes = (
     authValidation.signup,
     authController.registerUser,
   )
-  router.get('signout', logout)
+  router.get(AUTH_ROUTES.signup, authController.logout)
   return router
 }
 
