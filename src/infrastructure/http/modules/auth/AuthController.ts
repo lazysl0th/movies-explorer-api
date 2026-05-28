@@ -1,5 +1,7 @@
 import HttpStatusCode from '@infrastructure/constants/https-status-code.js'
 
+import type { RequestHandler } from 'express'
+
 import type LocalAuth from '@app/use-cases/auth/LocalAuth.js'
 import type Register from '@app/use-cases/auth/Register.js'
 
@@ -30,4 +32,15 @@ export default class AuthController {
     const user = await this.register.execute(name, email, password)
     res.status(HttpStatusCode.Created).send(user)
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  logout: RequestHandler = (_, res) =>
+    res
+      .status(HttpStatusCode.Ok)
+      .clearCookie('token', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+      })
+      .send({})
 }
