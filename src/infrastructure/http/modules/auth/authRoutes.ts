@@ -18,7 +18,11 @@ const createAuthRoutes = (
     authValidation.signin,
     authController.loginByEmail,
   )
-  router.post('/signup', signupValidationd, createUser)
+  router.post(
+    AUTH_ROUTES.signup,
+    authValidation.signup,
+    authController.registerUser,
+  )
   router.get('signout', logout)
   return router
 }

@@ -1,8 +1,9 @@
 import z from 'zod'
 
+import DomainError from '@domain/errors/DomainError.js'
 import response from '@infrastructure/constants/response.js'
 
-import handleZodError from './zodErrorHandler.js'
+import zodErrorHandler from './zodErrorsHandler.js'
 
 import type { ErrorRequestHandler } from 'express'
 
@@ -17,7 +18,12 @@ const errorHandler: ErrorRequestHandler = (e, _, res, next) => {
   }
 
   if (e instanceof z.ZodError) {
-    handleZodError(e, res)
+    zodErrorHandler(e, res)
+    return
+  }
+
+  if (e instanceof DomainError) {
+    res.status(404).send({ message: e.code })
     return
   }
 

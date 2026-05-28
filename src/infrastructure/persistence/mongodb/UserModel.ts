@@ -1,11 +1,6 @@
 import { model, Schema } from 'mongoose'
-import validator from 'validator'
-
-import response from '../../constants/response.js'
 
 import type { HydratedDocument, InferSchemaType } from 'mongoose'
-
-const { BAD_REQUEST } = response
 
 const userSchema = new Schema(
   {
@@ -18,17 +13,9 @@ const userSchema = new Schema(
       type: String,
       required: true,
       select: false,
-      validate: {
-        validator(value: string) {
-          return validator.isStrongPassword(value)
-        },
-        message: BAD_REQUEST.text,
-      },
     },
     name: {
       type: String,
-      minlength: 2,
-      maxlength: 30,
       required: true,
     },
   },

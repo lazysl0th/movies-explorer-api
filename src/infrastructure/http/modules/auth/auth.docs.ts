@@ -1,7 +1,11 @@
 import { API_ROUTES } from '@infrastructure/config/routes.js'
 import HttpStatusCode from '@infrastructure/constants/https-status-code.js'
 
-import { signinResponseSchema, signinSchema } from './auth.validation.js'
+import {
+  authResponseSchema,
+  signinSchema,
+  signupSchema,
+} from './auth.validation.js'
 
 import type { ZodOpenApiPathItemObject } from 'zod-openapi'
 
@@ -25,7 +29,7 @@ const authRoutesJson: Record<TAuthFullRoutesValues, ZodOpenApiPathItemObject> =
           [HttpStatusCode.Ok]: {
             description: 'Successfully authenticated. Returns access token.',
             content: {
-              'application/json': { schema: signinResponseSchema },
+              'application/json': { schema: authResponseSchema },
             },
           },
           [HttpStatusCode.BadRequest]: {
@@ -34,6 +38,32 @@ const authRoutesJson: Record<TAuthFullRoutesValues, ZodOpenApiPathItemObject> =
           },
           [HttpStatusCode.Unauthorized]: {
             description: 'Unauthorized. Invalid email or password provided.',
+          },
+        },
+      },
+    },
+    [API_ROUTES.auth.signup]: {
+      post: {
+        tags: ['Auth'],
+        summary: 'User Registration',
+        description:
+          'Registers a new user with their credentials (e.g., name, email, and password) and returns the created user data or a JWT access token.',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': { schema: signupSchema },
+          },
+        },
+        responses: {
+          [HttpStatusCode.Created]: {
+            description: 'User successfully registered.',
+            content: {
+              'application/json': { schema: authResponseSchema },
+            },
+          },
+          [HttpStatusCode.BadRequest]: {
+            description:
+              'Validation Error. Sent when input data fails schema verification or email is already taken.',
           },
         },
       },

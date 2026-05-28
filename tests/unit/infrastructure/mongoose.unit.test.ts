@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import config from '@infrastructure/config/env.js'
-import Mongoose from '@infrastructure/services/MongooseService.js'
+import MongooseService from '@infrastructure/services/MongooseService.js'
 
 import type { IDBService } from '@app/interfaces/services/IDBService.js'
 
@@ -33,21 +33,21 @@ vi.mock('mongoose', () => ({
 }))
 
 describe('chech mongoose', () => {
-  let fakeMongoose: IDBService
+  let fakeMongooseService: IDBService
 
   beforeEach(() => {
-    fakeMongoose = new Mongoose(config.MONGODB_URI)
+    fakeMongooseService = new MongooseService(config.MONGODB_URI)
     vi.spyOn(console, 'info').mockImplementation(() => {})
     vi.spyOn(console, 'error').mockImplementation(() => {})
   })
 
   describe('check connect', () => {
     it('call with correct uri', async () => {
-      await fakeMongoose.connect()
+      await fakeMongooseService.connect()
       expect(mongoose.connect).toHaveBeenCalledWith(config.MONGODB_URI)
     })
     it('call connection.on', async () => {
-      await fakeMongoose.connect()
+      await fakeMongooseService.connect()
       expect(mongoose.connection.on).toHaveBeenCalledWith(
         'connecting',
         expect.any(Function),
@@ -85,12 +85,12 @@ describe('chech mongoose', () => {
 
   describe('check connection', () => {
     it('should return false', async () => {
-      const result = await fakeMongoose.checkConnection()
+      const result = await fakeMongooseService.checkConnection()
       expect(result).toBe(false)
     })
     it('should return true if connected and ping success', async () => {
       mockContext.readyState = 1
-      const result = await fakeMongoose.checkConnection()
+      const result = await fakeMongooseService.checkConnection()
       await expect(mongoose.connection.db?.admin().ping()).resolves.toEqual({
         ok: 1,
       })
@@ -99,7 +99,7 @@ describe('chech mongoose', () => {
     it('should return false if ping fails', async () => {
       mockContext.readyState = 1
       mockContext.ping.mockRejectedValue(new Error())
-      const result = await fakeMongoose.checkConnection()
+      const result = await fakeMongooseService.checkConnection()
       await expect(mongoose.connection.db?.admin().ping()).rejects.toThrow()
       expect(result).toBe(false)
     })
