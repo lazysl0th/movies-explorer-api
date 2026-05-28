@@ -8,7 +8,7 @@ describe('check BcryptHashService', () => {
   const password = 'my-secret-password'
 
   it('should successfully hash a string and verify it', async () => {
-    const hash = await hashService.hash(password)
+    const hash = await hashService.generate(password)
     expect(hash).toBeDefined()
     expect(hash).not.toBe(password)
 

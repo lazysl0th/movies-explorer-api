@@ -5,7 +5,7 @@ import type IHashService from '@app/interfaces/services/IHashService.js'
 export default class BcryptHashService implements IHashService {
   constructor(private readonly saltRounds: number) {}
 
-  async hash(data: string): Promise<string> {
+  async generate(data: string): Promise<string> {
     return bcrypt.hash(data, this.saltRounds)
   }
 

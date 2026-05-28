@@ -1,13 +1,12 @@
 import DomainError from './DomainError.js'
 
-type TEntity = 'User'
+import type { TEntity } from '@domain/entities/types.js'
 
 export default class NotFoundError extends DomainError {
   readonly code: string
 
   constructor(entityName: TEntity, entityId: string) {
-    const uppercaseCode = entityName
     super(`${entityName} with id ${entityId} was not found.`)
-    this.code = `${uppercaseCode.toUpperCase()}.NOT_FOUND`
+    this.code = `${entityName.toUpperCase()}.NOT_FOUND`
   }
 }

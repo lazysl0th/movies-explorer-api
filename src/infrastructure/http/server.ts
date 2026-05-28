@@ -6,7 +6,7 @@ import helmet from 'helmet'
 import rateLimitMiddleware from '@infrastructure/http/middleware/rate-limit.middleware.js'
 
 import cors from './middleware/cors.middleware.js'
-import errorHandler from './middleware/errors/errorHandler.js'
+import errorsHandler from './middleware/errors/errorsHandler.js'
 import { errorLogger, requestLogger } from './middleware/logger.middleware.js'
 
 import type { Express } from 'express'
@@ -39,7 +39,7 @@ export default class App implements IApp {
     this.express.use(this.appRouter.requestHandler)
     this.express.use(errorLogger)
     this.express.use(errors())
-    this.express.use(errorHandler)
+    this.express.use(errorsHandler)
   }
 
   async start(): Promise<void> {

@@ -4,6 +4,7 @@ import { createTerminus } from '@godaddy/terminus'
 import swaggerUi from 'swagger-ui-express'
 
 import LocalAuth from '@app/use-cases/auth/LocalAuth.js'
+import Register from '@app/use-cases/auth/Register.js'
 import getTerminusOptions from '@infrastructure/config/terminus.config.js'
 import openApiDocumentation from '@infrastructure/http/apiDocs/index.docs.js'
 import AuthController from '@infrastructure/http/modules/auth/AuthController.js'
@@ -40,7 +41,8 @@ function bootstrap() {
     hashService,
     tokenService,
   )
-  const authController = new AuthController(localAuth)
+  const register = new Register(mongooseUserRepository, hashService)
+  const authController = new AuthController(localAuth, register)
   const authRoutes = createAuthRoutes(authValidations, authController)
 
   const appRouter = new AppRouter(docRoutes, authRoutes)

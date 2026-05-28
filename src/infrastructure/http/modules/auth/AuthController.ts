@@ -1,11 +1,15 @@
 import HttpStatusCode from '@infrastructure/constants/https-status-code.js'
 
 import type LocalAuth from '@app/use-cases/auth/LocalAuth.js'
+import type Register from '@app/use-cases/auth/Register.js'
 
-import type { TLoginHandler } from './types.js'
+import type { TLoginHandler, TRegisterHandler } from './types.js'
 
 export default class AuthController {
-  constructor(private localAuth: LocalAuth) {}
+  constructor(
+    private readonly localAuth: LocalAuth,
+    private readonly register: Register,
+  ) {}
 
   loginByEmail: TLoginHandler = async (req, res, _) => {
     const { email, password } = req.body
@@ -19,5 +23,11 @@ export default class AuthController {
         sameSite: 'none',
       })
       .send(user)
+  }
+
+  registerUser: TRegisterHandler = async (req, res, next) => {
+    const { name, email, password } = req.body
+    const user = await this.register.execute(name, email, password)
+    res.status(HttpStatusCode.Created).send(user)
   }
 }
