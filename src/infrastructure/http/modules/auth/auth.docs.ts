@@ -1,11 +1,10 @@
-import { API_ROUTES } from '@infrastructure/config/routes.js'
-import HttpStatusCode from '@infrastructure/constants/https-status-code.js'
-
 import {
   authResponseSchema,
   signinSchema,
   signupSchema,
-} from './auth.validation.js'
+} from '@app/dtos/AuthDto.js'
+import { FULL_API_ROUTES } from '@infrastructure/config/routes.js'
+import HttpStatusCode from '@infrastructure/constants/https-status-code.js'
 
 import type { ZodOpenApiPathItemObject } from 'zod-openapi'
 
@@ -13,7 +12,7 @@ import type { TAuthFullRoutesValues } from './types.js'
 
 const authRoutesJson: Record<TAuthFullRoutesValues, ZodOpenApiPathItemObject> =
   {
-    [API_ROUTES.auth.signin]: {
+    [FULL_API_ROUTES.auth.signin]: {
       post: {
         tags: ['Auth'],
         summary: 'User Authentication',
@@ -25,6 +24,7 @@ const authRoutesJson: Record<TAuthFullRoutesValues, ZodOpenApiPathItemObject> =
             'application/json': { schema: signinSchema },
           },
         },
+
         responses: {
           [HttpStatusCode.Ok]: {
             description: 'Successfully authenticated. Returns access token.',
@@ -42,7 +42,7 @@ const authRoutesJson: Record<TAuthFullRoutesValues, ZodOpenApiPathItemObject> =
         },
       },
     },
-    [API_ROUTES.auth.signup]: {
+    [FULL_API_ROUTES.auth.signup]: {
       post: {
         tags: ['Auth'],
         summary: 'User Registration',
@@ -68,7 +68,7 @@ const authRoutesJson: Record<TAuthFullRoutesValues, ZodOpenApiPathItemObject> =
         },
       },
     },
-    [API_ROUTES.auth.signout]: {
+    [FULL_API_ROUTES.auth.signout]: {
       post: {
         tags: ['Auth'],
         summary: 'User Logout',

@@ -7,7 +7,7 @@ import PasswordHash from '@domain/value-objects/user/PasswordHash.js'
 
 import type { Mocked } from 'vitest'
 
-import type { TAuthResponseDto, TLoginBodyDto } from '@app/dtos/AuthDTO.js'
+import type { TAuthResponseDto, TLoginBodyDto } from '@app/dtos/AuthDto.js'
 import type { ILoginUserRepository } from '@app/interfaces/repositories/IUserRepository.js'
 import type { THashComparerService } from '@app/interfaces/services/IHashService.js'
 import type { TTokenGenerateService } from '@app/interfaces/services/ITokenService.js'

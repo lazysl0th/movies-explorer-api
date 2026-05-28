@@ -4,15 +4,19 @@ import type {
   TAuthResponseDto,
   TLoginBodyDto,
   TRegisterBodyDto,
-} from '@app/dtos/AuthDTO.js'
-import type { API_ROUTES, AUTH_ROUTES } from '@infrastructure/config/routes.js'
+} from '@app/dtos/AuthDto.js'
+import type {
+  API_ROUTES,
+  FULL_API_ROUTES,
+} from '@infrastructure/config/routes.js'
 
 export type TAuthFullRoutesValues =
-  (typeof API_ROUTES)['auth'][keyof (typeof API_ROUTES)['auth']]
+  (typeof FULL_API_ROUTES)['auth'][keyof (typeof FULL_API_ROUTES)['auth']]
 
-export type TAuthRoutes = keyof typeof AUTH_ROUTES
+export type TAuthRoutes = keyof typeof API_ROUTES.auth
 
-export type TAuthRoutess = (typeof AUTH_ROUTES)[keyof typeof AUTH_ROUTES]
+export type TAuthRoutess =
+  (typeof API_ROUTES.auth)[keyof typeof API_ROUTES.auth]
 
 export type TAuthValidations = Record<TAuthRoutes, RequestHandler>
 

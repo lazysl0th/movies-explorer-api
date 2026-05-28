@@ -52,4 +52,25 @@ export default class MongooseUserRepository implements IUserRepository {
       throw e
     }
   }
+
+  async findById(id: string): Promise<User | null> {
+    try {
+      const userData = await this.userModel.findById(id)
+      if (!userData) return null
+      return new User(
+        userData._id.toString(),
+        userData.email,
+        userData.name,
+        new PasswordHash(userData.password),
+      )
+    } catch (e) {
+      if (
+        e instanceof MongooseError &&
+        (e.name === 'CastError' || e.name === 'ValidationError')
+      ) {
+        throw new BadRequestError()
+      }
+      throw e
+    }
+  }
 }

@@ -2,22 +2,13 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import Register from '@app/use-cases/auth/Register.js'
 import User from '@domain/entities/User.js'
-import InvalidCredentialsError from '@domain/errors/InvalidCredentialsError.js'
 import PasswordHash from '@domain/value-objects/user/PasswordHash.js'
 
 import type { Mocked } from 'vitest'
 
-import type {
-  TAuthResponseDto,
-  TLoginBodyDto,
-  TRegisterBodyDto,
-} from '@app/dtos/AuthDTO.js'
+import type { TRegisterBodyDto } from '@app/dtos/AuthDto.js'
 import type { IRegisterUserRepository } from '@app/interfaces/repositories/IUserRepository.js'
-import type {
-  THashComparerService,
-  THashGeneratorService,
-} from '@app/interfaces/services/IHashService.js'
-import type { TTokenGenerateService } from '@app/interfaces/services/ITokenService.js'
+import type { THashGeneratorService } from '@app/interfaces/services/IHashService.js'
 
 describe('check register', () => {
   let registerRepository: Mocked<IRegisterUserRepository>

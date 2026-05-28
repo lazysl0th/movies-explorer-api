@@ -24,6 +24,13 @@ const VALIDATION_MESSAGES = {
     nameDescription: 'Name of the user',
     nameExample: 'John',
   },
+  token: {
+    required: 'JWT token cookie is missing',
+    invalidFormat: 'Token must be a string',
+    description: 'Authentication token',
+    example:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
+  },
 } as const
 
 export default VALIDATION_MESSAGES
