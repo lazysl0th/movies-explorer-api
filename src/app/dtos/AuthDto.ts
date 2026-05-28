@@ -3,7 +3,7 @@ import z from 'zod'
 
 import VALIDATION_MESSAGES from '@infrastructure/constants/validation-responses.js'
 
-const { email, password, name, auth } = VALIDATION_MESSAGES
+const { email, password, name, auth, token } = VALIDATION_MESSAGES
 
 export const signinSchema = z.object({
   email: z.email(email.invalidFormat).meta({
@@ -42,3 +42,25 @@ export const authResponseSchema = z.object({
     example: auth.nameExample,
   }),
 })
+
+export const authJwtPayloadSchema = z.object({
+  id: z.string().meta({
+    description: auth.idDescription,
+    example: auth.idExample,
+  }),
+  iat: z.number().optional(),
+  exp: z.number().optional(),
+})
+
+export const cookieTokenSchema = z.object({
+  token: z.string(token.invalidFormat).min(1, token.required).meta({
+    description: token.description,
+    example: token.example,
+  }),
+})
+
+export type TLoginBodyDto = z.infer<typeof signinSchema>
+
+export type TRegisterBodyDto = z.infer<typeof signupSchema>
+
+export type TAuthResponseDto = z.infer<typeof authResponseSchema>

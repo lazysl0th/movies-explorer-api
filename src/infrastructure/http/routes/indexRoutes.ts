@@ -1,9 +1,9 @@
 import { Router } from 'express'
 
 import NotFoundError from '@domain/errors/notFound.js'
+import { BASE_ROUTES } from '@infrastructure/config/routes.js'
 
 import moviesRoutes from './movieRoutes.js'
-import usersRoutes from './userRoutes.js'
 import auth from '../middleware/auth.js'
 
 import type { RequestHandler } from 'express'
@@ -16,7 +16,7 @@ export default class AppRouter implements IRouter {
   constructor(
     private readonly DocRoutes: Router,
     private readonly authRoutes: Router,
-    private readonly usersRouter?: IRouter,
+    private readonly usersRoutes: Router,
     private readonly moviesRouter?: IRouter,
   ) {
     this.router = Router()
@@ -25,9 +25,9 @@ export default class AppRouter implements IRouter {
 
   private initializeRoutes(): void {
     this.router.use('/', this.authRoutes)
-    this.router.use('/api-docs', this.DocRoutes)
+    this.router.use(BASE_ROUTES.doc, this.DocRoutes)
     this.router.use(auth)
-    this.router.use('/users', usersRoutes)
+    this.router.use(BASE_ROUTES.users, this.usersRoutes)
     this.router.use('/movies', moviesRoutes)
     this.router.use((_, __, next) => next(new NotFoundError()))
   }

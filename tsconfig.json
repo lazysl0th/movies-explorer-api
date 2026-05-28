@@ -47,6 +47,6 @@
     "moduleDetection": "force",
     "skipLibCheck": true
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "./src/infrastructure/http/types/**/*.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

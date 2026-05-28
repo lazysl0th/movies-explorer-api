@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import { AUTH_ROUTES } from '@infrastructure/config/routes.js'
+import { API_ROUTES } from '@infrastructure/config/routes.js'
 
 import type AuthController from './AuthController.js'
 import type { TAuthValidations } from './types.js'
@@ -11,16 +11,16 @@ const createAuthRoutes = (
 ): Router => {
   const router = Router()
   router.post(
-    AUTH_ROUTES.signin,
+    API_ROUTES.auth.signin,
     authValidation.signin,
     authController.loginByEmail,
   )
   router.post(
-    AUTH_ROUTES.signup,
+    API_ROUTES.auth.signup,
     authValidation.signup,
     authController.registerUser,
   )
-  router.get(AUTH_ROUTES.signup, authController.logout)
+  router.get(API_ROUTES.auth.signup, authController.logout)
   return router
 }
 
