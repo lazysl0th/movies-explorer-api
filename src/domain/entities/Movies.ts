@@ -10,7 +10,7 @@ interface IMovieData {
   image: string
   trailer: string
   thumbnail: string
-  owner: User
+  owner: string
   movieId: number
   nameRU: string
   nameEN: string
@@ -35,7 +35,7 @@ export default class Movie {
 
   public readonly thumbnail: string
 
-  public readonly owner: User
+  public readonly owner: string
 
   public readonly movieId: number
 
@@ -84,7 +84,7 @@ export default class Movie {
       image: this.image,
       trailer: this.trailer,
       thumbnail: this.thumbnail,
-      owner: this.owner.toJSON(),
+      owner: this.owner,
       movieId: this.movieId,
       nameRU: this.nameRU,
       nameEN: this.nameEN,

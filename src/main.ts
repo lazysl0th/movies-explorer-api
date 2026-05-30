@@ -5,6 +5,7 @@ import swaggerUi from 'swagger-ui-express'
 
 import LocalAuth from '@app/use-cases/auth/LocalAuth.js'
 import Register from '@app/use-cases/auth/Register.js'
+import AddMovie from '@app/use-cases/movies/AddMovie.js'
 import GetUserMovies from '@app/use-cases/movies/GetUserMovies.js'
 import GetProfile from '@app/use-cases/users/GetProfile.js'
 import UpdateProfile from '@app/use-cases/users/UpdateProfile.js'
@@ -16,6 +17,7 @@ import authValidations from '@infrastructure/http/modules/auth/authValidations.j
 import createDocRoutes from '@infrastructure/http/modules/docs/docRoutes.js'
 import MovieController from '@infrastructure/http/modules/movies/MovieController.js'
 import createMovieRoutes from '@infrastructure/http/modules/movies/movieRoutes.js'
+import movieValidations from '@infrastructure/http/modules/movies/movieValidations.js'
 import UserController from '@infrastructure/http/modules/users/UserController.js'
 import createUserRoutes from '@infrastructure/http/modules/users/userRoutes.js'
 import userValidations from '@infrastructure/http/modules/users/userValidations.js'
@@ -61,8 +63,9 @@ function bootstrap() {
   const userRoutes = createUserRoutes(userController, userValidations)
   const mongooseMovieRepository = new MongooseMovieRepository(MovieModel)
   const getUserMovies = new GetUserMovies(mongooseMovieRepository)
-  const movieController = new MovieController(getUserMovies)
-  const movieRoutes = createMovieRoutes(movieController)
+  const addMovie = new AddMovie(mongooseMovieRepository)
+  const movieController = new MovieController(getUserMovies, addMovie)
+  const movieRoutes = createMovieRoutes(movieValidations, movieController)
 
   const appRouter = new AppRouter(
     docRoutes,

@@ -10,7 +10,7 @@ import type {
   IUserWithLocalCredentials,
 } from '@app/interfaces/repositories/IUserRepository.js'
 
-import type { TUserModel } from '../mongodb/UserModel.js'
+import type { TUserDocument, TUserModel } from '../mongodb/UserModel.js'
 
 export default class MongooseUserRepository implements IUserRepository {
   constructor(private readonly userModel: TUserModel) {}
@@ -34,19 +34,26 @@ export default class MongooseUserRepository implements IUserRepository {
     throw e
   }
 
-  async getByCredentials(
-    email: string,
-  ): Promise<IUserWithLocalCredentials | null> {
-    const userData = await this.userModel.findOne({ email }).select('+password')
-    if (!userData) return null
-    const user = new User({
+  // eslint-disable-next-line class-methods-use-this
+  private createUser(userData: TUserDocument): User {
+    return new User({
       id: userData._id.toString(),
       email: userData.email,
       name: userData.name,
     })
+  }
+
+  async getByCredentials(
+    email: string,
+  ): Promise<IUserWithLocalCredentials | null> {
+    const userDocument = await this.userModel
+      .findOne({ email })
+      .select('+password')
+    if (!userDocument) return null
+    const user = this.createUser(userDocument)
     const localCredentials = LocalCredentials.restore({
-      id: userData._id.toString(),
-      password: userData.password,
+      id: userDocument._id.toString(),
+      password: userDocument.password,
     })
     return { user, localCredentials }
   }
@@ -56,17 +63,13 @@ export default class MongooseUserRepository implements IUserRepository {
     localCredentials,
   }: IUserWithLocalCredentials): Promise<User> {
     try {
-      const userData = await this.userModel.create({
+      const userDocument = await this.userModel.create({
         _id: user.id,
         name: user.name,
         email: user.email,
         password: localCredentials.passwordHash,
       })
-      return new User({
-        id: userData._id.toString(),
-        email: userData.email,
-        name: userData.name,
-      })
+      return this.createUser(userDocument)
     } catch (e) {
       return this.handleError(e)
     }
@@ -74,13 +77,9 @@ export default class MongooseUserRepository implements IUserRepository {
 
   async getById(id: string): Promise<User | null> {
     try {
-      const userData = await this.userModel.findById(id)
-      if (!userData) return null
-      return new User({
-        id: userData._id.toString(),
-        email: userData.email,
-        name: userData.name,
-      })
+      const userDocument = await this.userModel.findById(id)
+      if (!userDocument) return null
+      return this.createUser(userDocument)
     } catch (e) {
       return this.handleError(e)
     }
@@ -88,17 +87,13 @@ export default class MongooseUserRepository implements IUserRepository {
 
   async update(user: User): Promise<User | null> {
     try {
-      const userData = await this.userModel.findByIdAndUpdate(
+      const userDocument = await this.userModel.findByIdAndUpdate(
         user.id,
         { name: user.name, email: user.email },
         { returnDocument: 'after' },
       )
-      if (!userData) return null
-      return new User({
-        id: userData._id.toString(),
-        email: userData.email,
-        name: userData.name,
-      })
+      if (!userDocument) return null
+      return this.createUser(userDocument)
     } catch (e) {
       return this.handleError(e)
     }

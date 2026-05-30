@@ -1,6 +1,6 @@
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import { Types } from 'mongoose'
-import { afterAll, beforeAll, vi } from 'vitest'
+import { afterAll, afterEach, beforeAll, beforeEach, vi } from 'vitest'
 
 import LocalCredentials from '@domain/entities/LocalCredentials.js'
 import Movie from '@domain/entities/Movies.js'
@@ -11,8 +11,6 @@ import UserModel from '@infrastructure/persistence/mongodb/UserModel.js'
 import MongooseMovieRepository from '@infrastructure/persistence/repositories/MongooseMovieRepository.js'
 import MongooseUserRepository from '@infrastructure/persistence/repositories/MongooseUserRepository.js'
 import MongooseService from '@infrastructure/services/MongooseService.js'
-
-import type { MockInstance } from 'vitest'
 
 import type { IDBService } from '@app/interfaces/services/IDBService.js'
 
@@ -30,8 +28,7 @@ export const fakeMovie = new Movie({
   nameRU: 'The Matrix',
   nameEN: 'The Matrix',
   id: movieRepository.generateId(),
-  description:
-    'A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.',
+  description: 'A computer hacker learns from mysterious...',
   director: 'Lana Wachowski',
   duration: 136,
   year: '1999',
@@ -41,7 +38,7 @@ export const fakeMovie = new Movie({
   thumbnail:
     'https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg',
   trailer: 'https://www.youtube.com/watch?v=vKQi3bBA1y8',
-  owner: fakeUser,
+  owner: fakeUser.id,
   movieId: 1,
 })
 
@@ -52,18 +49,15 @@ export const fakeLocalCredetials = new LocalCredentials({
 
 let mongoServer: MongoMemoryServer
 let mongooseService: IDBService
-let consoleSpies: MockInstance[] = []
 
 const initDatabase = async (): Promise<void> => {
   await Promise.all([UserModel.init(), MovieModel.init()])
 }
 
 beforeAll(async () => {
-  consoleSpies = [
-    vi.spyOn(console, 'log').mockImplementation(() => {}),
-    vi.spyOn(console, 'warn').mockImplementation(() => {}),
-    vi.spyOn(console, 'error').mockImplementation(() => {}),
-  ]
+  vi.spyOn(console, 'log').mockImplementation(() => {})
+  vi.spyOn(console, 'warn').mockImplementation(() => {})
+  vi.spyOn(console, 'error').mockImplementation(() => {})
 
   mongoServer = await MongoMemoryServer.create()
   mongooseService = new MongooseService(mongoServer.getUri())
@@ -76,10 +70,23 @@ export const clearDatabase = async (): Promise<void> => {
 }
 
 afterAll(async () => {
+  vi.spyOn(console, 'log').mockImplementation(() => {})
+  vi.spyOn(console, 'warn').mockImplementation(() => {})
+  vi.spyOn(console, 'error').mockImplementation(() => {})
   await clearDatabase()
   await mongooseService.disconnect()
   await mongoServer.stop()
-  consoleSpies.forEach((spy) => spy.mockRestore())
+  vi.restoreAllMocks()
+})
+
+beforeEach(() => {
+  vi.spyOn(console, 'log').mockImplementation(() => {})
+  vi.spyOn(console, 'warn').mockImplementation(() => {})
+  vi.spyOn(console, 'error').mockImplementation(() => {})
+})
+
+afterEach(() => {
+  vi.restoreAllMocks()
 })
 
 export const resetWithDefaultUser = async (): Promise<void> => {
