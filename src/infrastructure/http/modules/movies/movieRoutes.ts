@@ -1,15 +1,5 @@
 import { Router } from 'express'
 
-import {
-  addMovie,
-  deleteMovieByCredentials,
-  getMovies,
-} from './movies.controller.js'
-import {
-  addMovieValidation,
-  deleteMovieValidation,
-} from '../../middleware/validation.js'
-
 import type MovieController from './MovieController.js'
 import type { TMovieValidations } from './types.js'
 
@@ -23,7 +13,11 @@ const createMovieRoutes = (
 
   router.post('/', movieValidation['/'], movieController.saveMovie)
 
-  router.delete('/:movieId', deleteMovieValidation, deleteMovieByCredentials)
+  router.delete(
+    '/:movieId',
+    movieValidation['/:movieId'],
+    movieController.deleteMovieByCredentials,
+  )
 
   return router
 }

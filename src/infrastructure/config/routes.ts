@@ -23,6 +23,7 @@ export const API_ROUTES = {
   },
   movies: {
     '/': '/',
+    '/:movieId': '/:movieId',
   },
 } as const
 
@@ -38,5 +39,6 @@ export const FULL_API_ROUTES = {
   },
   movies: {
     '/': `${BASE_ROUTES.movies}${API_ROUTES.movies['/']}`,
+    '/:movieId': `${BASE_ROUTES.movies}${API_ROUTES.movies['/:movieId']}`,
   },
 } as const satisfies TRoutesMap

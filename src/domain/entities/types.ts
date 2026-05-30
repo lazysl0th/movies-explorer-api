@@ -1,1 +1,1 @@
-export type TEntity = 'User'
+export type TEntity = 'User' | 'Movie'

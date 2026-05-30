@@ -4,6 +4,8 @@ import Movie from '@domain/entities/Movies.js'
 import BadRequestError from '@domain/errors/BadRequestError.js'
 import ConflictError from '@domain/errors/ConflictError.js'
 
+import type { DeleteResult } from 'mongoose'
+
 import type { IMovieRepository } from '@app/interfaces/repositories/IMovieRepository.js'
 
 import type { TMovieDocument, TMovieModel } from '../mongodb/MovieModel.js'
@@ -74,6 +76,23 @@ export default class MongooseMovieRepository implements IMovieRepository {
         nameEN: movie.nameEN,
       })
       return this.createMovie(movieDocument)
+    } catch (e) {
+      return this.handleError(e)
+    }
+  }
+
+  async getById(movieId: string): Promise<Movie | null> {
+    try {
+      const movie = await this.movieModel.findById(movieId).populate('owner')
+      return movie ? this.createMovie(movie) : null
+    } catch (e) {
+      return this.handleError(e)
+    }
+  }
+
+  async delete(movieId: string): Promise<DeleteResult> {
+    try {
+      return await this.movieModel.deleteOne({ _id: movieId })
     } catch (e) {
       return this.handleError(e)
     }

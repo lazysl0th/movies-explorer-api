@@ -1,6 +1,7 @@
 import { cookieTokenSchema } from '@app/dtos/AuthDto.js'
 import {
   addMovieSchema,
+  deleteMovieSchema,
   movieResponseSchema,
   moviesResponseSchema,
 } from '@app/dtos/MovieDto.js'
@@ -65,7 +66,33 @@ const movieRoutesJson: Record<
         },
       },
     },
+    delete: {
+      tags: ['Movies'],
+      summary: 'Delete Movie',
+      description:
+        'Deletes a specific movie from the saved list by its ID. Requires authentication.',
+      requestParams: {
+        cookie: cookieTokenSchema,
+        path: deleteMovieSchema,
+      },
+      security: [{ cookieAuth: [] }],
+      responses: {
+        [HttpStatusCode.Ok]: {
+          description: 'Movie successfully deleted.',
+        },
+        [HttpStatusCode.BadRequest]: {
+          description: 'Bad Request. Invalid movie ID supplied.',
+        },
+        [HttpStatusCode.Unauthorized]: {
+          description: 'Unauthorized. Missing or invalid authentication token.',
+        },
+        [HttpStatusCode.NotFound]: {
+          description: 'Movie not found.',
+        },
+      },
+    },
   },
+  [FULL_API_ROUTES.movies['/:movieId']]: {},
 }
 
 export default movieRoutesJson

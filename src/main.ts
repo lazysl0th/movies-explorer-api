@@ -6,11 +6,12 @@ import swaggerUi from 'swagger-ui-express'
 import LocalAuth from '@app/use-cases/auth/LocalAuth.js'
 import Register from '@app/use-cases/auth/Register.js'
 import AddMovie from '@app/use-cases/movies/AddMovie.js'
+import DeleteMovie from '@app/use-cases/movies/DeleteMovie.js'
 import GetUserMovies from '@app/use-cases/movies/GetUserMovies.js'
 import GetProfile from '@app/use-cases/users/GetProfile.js'
 import UpdateProfile from '@app/use-cases/users/UpdateProfile.js'
 import getTerminusOptions from '@infrastructure/config/terminus.config.js'
-import openApiDocumentation from '@infrastructure/http/indexDocs.js'
+import openApiDocumentation from '@infrastructure/http/appDocs.js'
 import AuthController from '@infrastructure/http/modules/auth/AuthController.js'
 import createAuthRoutes from '@infrastructure/http/modules/auth/authRoutes.js'
 import authValidations from '@infrastructure/http/modules/auth/authValidations.js'
@@ -31,7 +32,7 @@ import JwtTokenService from '@infrastructure/services/JwtTokenService.js'
 import MongooseService from '@infrastructure/services/MongooseService.js'
 
 import config from './infrastructure/config/env.js'
-import AppRouter from './infrastructure/http/indexRoutes.js'
+import createAppRoutes from './infrastructure/http/appRoutes.js'
 import App from './infrastructure/http/server.js'
 import {
   handlerCriticalError,
@@ -64,19 +65,24 @@ function bootstrap() {
   const mongooseMovieRepository = new MongooseMovieRepository(MovieModel)
   const getUserMovies = new GetUserMovies(mongooseMovieRepository)
   const addMovie = new AddMovie(mongooseMovieRepository)
-  const movieController = new MovieController(getUserMovies, addMovie)
+  const deleteMovie = new DeleteMovie(mongooseMovieRepository)
+  const movieController = new MovieController(
+    getUserMovies,
+    addMovie,
+    deleteMovie,
+  )
   const movieRoutes = createMovieRoutes(movieValidations, movieController)
 
-  const appRouter = new AppRouter(
-    docRoutes,
-    authRoutes,
-    userRoutes,
-    movieRoutes,
-  )
+  const appRoutes = createAppRoutes({
+    auth: authRoutes,
+    doc: docRoutes,
+    users: userRoutes,
+    movies: movieRoutes,
+  })
   const mongoose = new MongooseService(config.MONGODB_URI)
   const dbModule = new Database(mongoose)
 
-  const app = new App(appRouter, dbModule)
+  const app = new App(appRoutes, dbModule)
 
   app.start()
 

@@ -1,6 +1,6 @@
 import { signinSchema, signupSchema } from '@app/dtos/AuthDto.js'
 
-import validateBody from '../../middleware/validation-zod.middleware.js'
+import { validateBody } from '../../middleware/validation.middleware.js'
 
 import type { TAuthValidations } from './types.js'
 
