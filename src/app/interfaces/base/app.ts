@@ -1,5 +1,3 @@
-import type { IncomingMessage, ServerResponse } from 'node:http'
-
 import type { Express } from 'express'
 
 export interface IApp {

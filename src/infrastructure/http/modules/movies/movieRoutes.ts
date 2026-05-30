@@ -11,16 +11,17 @@ import {
 } from '../../middleware/validation.js'
 
 import type MovieController from './MovieController.js'
+import type { TMovieValidations } from './types.js'
 
 const createMovieRoutes = (
+  movieValidation: TMovieValidations,
   movieController: MovieController,
-  // userValidation: TMovieValidations,
 ): Router => {
   const router = Router()
 
   router.get('/', movieController.getUserMovies)
 
-  router.post('/', addMovieValidation, addMovie)
+  router.post('/', movieValidation['/'], movieController.saveMovie)
 
   router.delete('/:movieId', deleteMovieValidation, deleteMovieByCredentials)
 

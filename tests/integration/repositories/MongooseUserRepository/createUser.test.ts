@@ -1,4 +1,4 @@
-import { MongooseError } from 'mongoose'
+import mongoose from 'mongoose'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import User from '@domain/entities/User.js'
@@ -13,7 +13,7 @@ import {
   userRepository,
 } from '../setup.js'
 
-describe('MongooseUserRepository - create', () => {
+describe('MongooseUserRepository - Create User', () => {
   beforeEach(async () => {
     await resetWithDefaultUser()
   })
@@ -27,14 +27,14 @@ describe('MongooseUserRepository - create', () => {
   })
 
   it('should throw BadRequestError if name violates validation constraints', async () => {
-    const validationError = Object.create(MongooseError.prototype, {
-      name: { value: 'ValidationError', writable: true },
-      message: { value: 'Mongoose validation failed', writable: true },
-    })
+    const validationError = new mongoose.Error.ValidationError()
+    validationError.errors = {
+      name: new mongoose.Error.ValidatorError({
+        message: 'Path `name` is required.',
+      }),
+    }
 
-    const spy = vi
-      .spyOn(UserModel, 'create')
-      .mockRejectedValueOnce(validationError)
+    vi.spyOn(UserModel, 'create').mockRejectedValueOnce(validationError)
 
     await UserModel.deleteMany({})
 
@@ -43,8 +43,6 @@ describe('MongooseUserRepository - create', () => {
       localCredentials: fakeLocalCredetials,
     })
     await expect(action).rejects.toThrow(BadRequestError)
-
-    spy.mockRestore()
   })
 
   it('should create a new user and return domain entity instance', async () => {

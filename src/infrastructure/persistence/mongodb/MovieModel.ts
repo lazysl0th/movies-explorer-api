@@ -1,12 +1,12 @@
-import mongoose, { model } from 'mongoose'
+import mongoose, { model, Types } from 'mongoose'
 
-import type { InferSchemaType } from 'mongoose'
+import type { HydratedDocument, InferSchemaType } from 'mongoose'
 
 const movieSchema = new mongoose.Schema({
-  /* _id: {
-      type: Types.ObjectId,
-      required: true,
-    }, */
+  _id: {
+    type: Types.ObjectId,
+    required: true,
+  },
   country: {
     type: String,
     required: true,
@@ -59,6 +59,8 @@ const movieSchema = new mongoose.Schema({
 })
 
 type TDbMovie = InferSchemaType<typeof movieSchema>
+
+export type TMovieDocument = HydratedDocument<TDbMovie>
 
 const MovieModel = model<TDbMovie>('Movie', movieSchema)
 

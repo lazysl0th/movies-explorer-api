@@ -32,5 +32,6 @@ export type TUpdateProfileHandler = RequestHandler<
   TRequestUser
 >
 
-export type TUsersRoutes = keyof typeof API_ROUTES.users
+type TUsersRoutes = keyof typeof API_ROUTES.users
+
 export type TUserValidations = Record<TUsersRoutes, RequestHandler>
