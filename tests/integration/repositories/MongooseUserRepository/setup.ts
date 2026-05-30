@@ -2,6 +2,8 @@ import { MongoMemoryServer } from 'mongodb-memory-server'
 import { Types } from 'mongoose'
 import { afterAll, beforeAll, vi } from 'vitest'
 
+import LocalCredentials from '@domain/entities/LocalCredentials.js'
+import User from '@domain/entities/User.js'
 import PasswordHash from '@domain/value-objects/user/PasswordHash.js'
 import UserModel from '@infrastructure/persistence/mongodb/UserModel.js'
 import MongooseUserRepository from '@infrastructure/persistence/repositories/MongooseUserRepository.js'
@@ -9,21 +11,23 @@ import MongooseService from '@infrastructure/services/MongooseService.js'
 
 import type { MockInstance } from 'vitest'
 
-import type {
-  IUserRepository,
-  TNewUser,
-} from '@app/interfaces/repositories/IUserRepository.js'
+import type { IUserRepository } from '@app/interfaces/repositories/IUserRepository.js'
 import type { IDBService } from '@app/interfaces/services/IDBService.js'
-
-export const fakeNewUser: TNewUser = {
-  email: 'test@example.com',
-  name: 'John Doe',
-  passwordHash: new PasswordHash('Hashed_password_123'),
-}
 
 export const userRepository: IUserRepository = new MongooseUserRepository(
   UserModel,
 )
+
+export const fakeUser = new User({
+  id: userRepository.generateId(),
+  email: 'test@example.com',
+  name: 'John Doe',
+})
+
+export const fakeLocalCredetials = new LocalCredentials({
+  id: fakeUser.id,
+  passwordHash: new PasswordHash('Hashed_password_123'),
+})
 
 let mongoServer: MongoMemoryServer
 let mongooseService: IDBService
@@ -39,6 +43,7 @@ beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create()
   mongooseService = new MongooseService(mongoServer.getUri())
   await mongooseService.connect()
+  UserModel.init()
 })
 
 afterAll(async () => {
@@ -48,11 +53,13 @@ afterAll(async () => {
   consoleSpies.forEach((spy) => spy.mockRestore())
 })
 
-export const resetWithDefaultUser = async () => {
+export const resetWithDefaultUser = async (): Promise<void> => {
   await UserModel.deleteMany({})
   await UserModel.create({
-    ...fakeNewUser,
-    password: fakeNewUser.passwordHash.value,
+    _id: fakeUser.id,
+    name: fakeUser.name,
+    email: fakeUser.email,
+    password: fakeLocalCredetials.passwordHash,
   })
 }
 

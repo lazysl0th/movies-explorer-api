@@ -3,25 +3,23 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import GetProfile from '@app/use-cases/users/GetProfile.js'
 import User from '@domain/entities/User.js'
 import NotFoundError from '@domain/errors/NotFoundError.js'
-import PasswordHash from '@domain/value-objects/user/PasswordHash.js'
 
+import type { TRequestUser } from '@infrastructure/http/modules/user/user.validationsSchemas.js'
 import type { Mocked } from 'vitest'
 
-import type { TRequestUser } from '@app/dtos/UserDto.js'
 import type { IFindByIdUserRepository } from '@app/interfaces/repositories/IUserRepository.js'
 
-describe('check get profile', () => {
+describe('GetProfile Use Case', () => {
   let findRepository: Mocked<IFindByIdUserRepository>
   let getProfile: GetProfile
   const fakeUserReq: TRequestUser = {
     id: '1',
   }
-  const fakeUser = new User(
-    '1',
-    'test@example.com',
-    'John Doe',
-    new PasswordHash('Hashed_password_123'),
-  )
+  const fakeUser = new User({
+    id: '1',
+    email: 'test@example.com',
+    name: 'John Doe',
+  })
 
   const fakeResult: User = fakeUser
 

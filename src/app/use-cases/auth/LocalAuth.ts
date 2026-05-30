@@ -1,9 +1,9 @@
 import InvalidCredentialsError from '@domain/errors/InvalidCredentialsError.js'
 
+import type { ILocalAuthResponseDto, TLoginBodyDto } from '@app/dtos/AuthDto.js'
 import type { ILoginUserRepository } from '@app/interfaces/repositories/IUserRepository.js'
 import type { THashComparerService } from '@app/interfaces/services/IHashService.js'
 import type { TTokenGenerateService } from '@app/interfaces/services/ITokenService.js'
-import type User from '@domain/entities/User.js'
 
 export default class LocalAuth {
   constructor(
@@ -12,17 +12,21 @@ export default class LocalAuth {
     private readonly tokenGenerateService: TTokenGenerateService,
   ) {}
 
-  async execute(
-    email: string,
-    password: string,
-  ): Promise<{ user: User; token: string }> {
-    const user = await this.loginRepository.findUserByCredentials(email)
-    if (!user) throw new InvalidCredentialsError()
-    const isMatched = await this.hashComparerService.compare(
-      password,
-      user.passwordHash.value,
+  async execute({
+    email,
+    password,
+  }: TLoginBodyDto): Promise<ILocalAuthResponseDto> {
+    const userWithCredentials =
+      await this.loginRepository.findUserByCredentials(email)
+    if (!userWithCredentials) throw new InvalidCredentialsError()
+    const { user, localCredentials } = userWithCredentials
+    if (
+      !(await localCredentials.comparePassword(
+        password,
+        this.hashComparerService,
+      ))
     )
-    if (!isMatched) throw new InvalidCredentialsError()
+      throw new InvalidCredentialsError()
     const token = this.tokenGenerateService.generate(
       { id: user.id },
       { expiresIn: '7d' },

@@ -6,7 +6,7 @@ import type { Server } from 'node:http'
 export const handlerServerError = (
   error: NodeJS.ErrnoException,
   server: Server,
-) => {
+): void => {
   if (error.code === 'EADDRINUSE') {
     console.error(
       { port: config.PORT, error },

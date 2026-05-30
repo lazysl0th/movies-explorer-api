@@ -9,7 +9,7 @@ import type { ErrorRequestHandler } from 'express'
 
 const { INTERNAL_SERVER_ERROR } = response
 
-const errorHandler: ErrorRequestHandler = (e, _, res, next) => {
+const errorsHandler: ErrorRequestHandler = (e, _, res, next) => {
   console.log(e)
 
   if (res.headersSent) {
@@ -37,4 +37,4 @@ const errorHandler: ErrorRequestHandler = (e, _, res, next) => {
   })
 }
 
-export default errorHandler
+export default errorsHandler

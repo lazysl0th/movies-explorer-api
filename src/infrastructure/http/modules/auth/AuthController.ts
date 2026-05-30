@@ -13,9 +13,9 @@ export default class AuthController {
     private readonly register: Register,
   ) {}
 
-  loginByEmail: TLoginHandler = async (req, res, _) => {
+  loginByEmail: TLoginHandler = async (req, res) => {
     const { email, password } = req.body
-    const { user, token } = await this.localAuth.execute(email, password)
+    const { user, token } = await this.localAuth.execute({ email, password })
     res
       .status(HttpStatusCode.Ok)
       .cookie('token', token, {
@@ -27,9 +27,9 @@ export default class AuthController {
       .send(user)
   }
 
-  registerUser: TRegisterHandler = async (req, res, next) => {
+  registerUser: TRegisterHandler = async (req, res) => {
     const { name, email, password } = req.body
-    const user = await this.register.execute(name, email, password)
+    const user = await this.register.execute({ name, email, password })
     res.status(HttpStatusCode.Created).send(user)
   }
 

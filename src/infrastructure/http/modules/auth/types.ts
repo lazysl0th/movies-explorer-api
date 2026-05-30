@@ -1,7 +1,7 @@
 import type { RequestHandler } from 'express'
 
 import type {
-  TAuthResponseDto,
+  TAuthUserResponseDto,
   TLoginBodyDto,
   TRegisterBodyDto,
 } from '@app/dtos/AuthDto.js'
@@ -24,12 +24,12 @@ type TAuthParams = Record<string, never>
 
 export type TLoginHandler = RequestHandler<
   TAuthParams,
-  TAuthResponseDto,
+  TAuthUserResponseDto,
   TLoginBodyDto
 >
 
 export type TRegisterHandler = RequestHandler<
   TAuthParams,
-  TAuthResponseDto,
+  TAuthUserResponseDto,
   TRegisterBodyDto
 >

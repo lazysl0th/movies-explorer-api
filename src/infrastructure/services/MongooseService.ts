@@ -68,7 +68,7 @@ export default class MongooseService implements IDBService {
     })
   }
 
-  public async disconnect() {
+  public async disconnect(): Promise<void> {
     await this.mongooseConnection.close()
   }
 }

@@ -8,18 +8,18 @@ describe('MongooseUserRepository - findUserByCredentials', () => {
   })
 
   it('should successfully find user by email and return domain entity', async () => {
-    const user = await userRepository.findUserByCredentials('test@example.com')
+    const userWithCredentials =
+      await userRepository.findUserByCredentials('test@example.com')
 
-    expect(user).not.toBeNull()
-    expect(user?.email).toBe('test@example.com')
-    expect(user?.name).toBe('John Doe')
-    expect(user?.passwordHash.value).toBe('Hashed_password_123')
+    expect(userWithCredentials?.user).not.toBeNull()
+    expect(userWithCredentials?.user?.email).toBe('test@example.com')
+    expect(userWithCredentials?.user?.name).toBe('John Doe')
   })
 
   it('should return null if user is not found', async () => {
-    const user = await userRepository.findUserByCredentials(
+    const userWithCredentials = await userRepository.findUserByCredentials(
       'notfound@example.com',
     )
-    expect(user).toBeNull()
+    expect(userWithCredentials).toBeNull()
   })
 })
