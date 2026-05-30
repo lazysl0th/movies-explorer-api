@@ -1,10 +1,10 @@
 import { createDocument } from 'zod-openapi'
 
 import config from '@infrastructure/config/env.js'
-import { API_PREFIX } from '@infrastructure/config/routes.js'
 
-import authRoutesJson from '../modules/auth/auth.docs.js'
-import userRoutesJson from '../modules/user/user.docs.js'
+import authRoutesJson from './modules/auth/authDocs.js'
+import movieRoutesJson from './modules/movies/movieDocs.js'
+import userRoutesJson from './modules/users/userDocs.js'
 
 import type { ZodOpenApiObject } from 'zod-openapi'
 
@@ -31,6 +31,11 @@ export const appRoutesJson: ZodOpenApiObject = {
       name: 'Users',
       description: 'User profile management, retrieval, and account operations',
     },
+    {
+      name: 'Movies',
+      description:
+        "User's favorite movies management, including saving, retrieving, and removing titles.",
+    },
   ],
   components: {
     securitySchemes: {
@@ -46,6 +51,7 @@ export const appRoutesJson: ZodOpenApiObject = {
   paths: {
     ...authRoutesJson,
     ...userRoutesJson,
+    ...movieRoutesJson,
   },
 }
 

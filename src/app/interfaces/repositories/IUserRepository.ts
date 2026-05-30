@@ -8,27 +8,19 @@ export interface IUserWithLocalCredentials {
 
 export interface IUserRepository {
   generateId: () => string
-  findUserByCredentials: (
-    email: string,
-  ) => Promise<IUserWithLocalCredentials | null>
+  getByCredentials: (email: string) => Promise<IUserWithLocalCredentials | null>
   create: (user: IUserWithLocalCredentials) => Promise<User>
-  findById: (id: string) => Promise<User | null>
-  findByIdAndUpdate: (user: User) => Promise<User | null>
+  getById: (id: string) => Promise<User | null>
+  update: (user: User) => Promise<User | null>
 }
 
-export type ILoginUserRepository = Pick<
-  IUserRepository,
-  'findUserByCredentials'
->
+export type ILoginUserRepository = Pick<IUserRepository, 'getByCredentials'>
 export type IRegisterUserRepository = Pick<
   IUserRepository,
   'generateId' | 'create'
 >
 
-export type IFindByIdUserRepository = Pick<IUserRepository, 'findById'>
+export type IGetByIdUserRepository = Pick<IUserRepository, 'getById'>
 
-export type IFindByIdAndUpdateUserRepository = Pick<
-  IUserRepository,
-  'findByIdAndUpdate'
-> &
-  IFindByIdUserRepository
+export type IUpdateUserRepository = Pick<IUserRepository, 'update'> &
+  IGetByIdUserRepository

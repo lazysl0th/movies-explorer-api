@@ -17,7 +17,7 @@ export default class LocalAuth {
     password,
   }: TLoginBodyDto): Promise<ILocalAuthResponseDto> {
     const userWithCredentials =
-      await this.loginRepository.findUserByCredentials(email)
+      await this.loginRepository.getByCredentials(email)
     if (!userWithCredentials) throw new InvalidCredentialsError()
     const { user, localCredentials } = userWithCredentials
     if (

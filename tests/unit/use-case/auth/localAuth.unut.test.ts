@@ -6,12 +6,9 @@ import User from '@domain/entities/User.js'
 import InvalidCredentialsError from '@domain/errors/InvalidCredentialsError.js'
 import PasswordHash from '@domain/value-objects/user/PasswordHash.js'
 
-import type {
-  TAuthResponseDto,
-  TLoginBodyDto,
-} from '@infrastructure/http/modules/auth/auth.validationsSchemas.js'
 import type { Mocked } from 'vitest'
 
+import type { TAuthUserResponseDto, TLoginBodyDto } from '@app/dtos/AuthDto.js'
 import type { ILoginUserRepository } from '@app/interfaces/repositories/IUserRepository.js'
 import type { THashComparerService } from '@app/interfaces/services/IHashService.js'
 import type { TTokenGenerateService } from '@app/interfaces/services/ITokenService.js'
@@ -35,14 +32,14 @@ describe('LocalAuth Use Case', () => {
     passwordHash: new PasswordHash('Hashed_password_123'),
   })
 
-  const fakeResult: { user: TAuthResponseDto; token: string } = {
+  const fakeResult: { user: TAuthUserResponseDto; token: string } = {
     user: fakeUser,
     token: 'jwt',
   }
 
   beforeEach(() => {
     loginRepository = {
-      findUserByCredentials: vi.fn().mockResolvedValue({
+      getByCredentials: vi.fn().mockResolvedValue({
         user: fakeUser,
         localCredentials: fakeLocalCredentials,
       }),
@@ -71,7 +68,7 @@ describe('LocalAuth Use Case', () => {
       password: fakeLoginBodyDto.password,
     })
     expect(result).toStrictEqual(fakeResult)
-    expect(loginRepository.findUserByCredentials).toHaveBeenCalledWith(
+    expect(loginRepository.getByCredentials).toHaveBeenCalledWith(
       fakeLoginBodyDto.email,
     )
     expect(fakeLocalCredentials.comparePassword).toHaveBeenCalledWith(
@@ -82,7 +79,7 @@ describe('LocalAuth Use Case', () => {
   })
 
   it('should throw when user not found', async () => {
-    loginRepository.findUserByCredentials.mockResolvedValue(null)
+    loginRepository.getByCredentials.mockResolvedValue(null)
     const action = localAuth.execute({
       email: fakeLoginBodyDto.email,
       password: fakeLoginBodyDto.password,

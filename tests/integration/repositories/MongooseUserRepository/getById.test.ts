@@ -8,9 +8,9 @@ import {
   fakeLocalCredetials,
   fakeUser,
   userRepository,
-} from './setup.js'
+} from '../setup.js'
 
-describe('MongooseUserRepository - findById', () => {
+describe('MongooseUserRepository - getById', () => {
   beforeEach(async () => {
     await UserModel.deleteMany({})
     await UserModel.create({
@@ -22,7 +22,7 @@ describe('MongooseUserRepository - findById', () => {
   })
 
   it('should successfully find user by id and return domain entity', async () => {
-    const user = await userRepository.findById(fakeUser.id)
+    const user = await userRepository.getById(fakeUser.id)
 
     expect(user).not.toBeNull()
     expect(user?.id).toBe(fakeUser.id)
@@ -32,12 +32,12 @@ describe('MongooseUserRepository - findById', () => {
 
   it('should return null if user is not found', async () => {
     const nonExistingId = createTestId(2)
-    const user = await userRepository.findById(nonExistingId)
+    const user = await userRepository.getById(nonExistingId)
     expect(user).toBeNull()
   })
 
   it('should throw if user is not found', async () => {
-    const action = userRepository.findById('qwert')
+    const action = userRepository.getById('qwert')
     await expect(action).rejects.toThrow(BadRequestError)
   })
 })

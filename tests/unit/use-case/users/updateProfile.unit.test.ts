@@ -6,10 +6,10 @@ import NotFoundError from '@domain/errors/NotFoundError.js'
 
 import type { Mocked } from 'vitest'
 
-import type { IFindByIdAndUpdateUserRepository } from '@app/interfaces/repositories/IUserRepository.js'
+import type { IUpdateUserRepository } from '@app/interfaces/repositories/IUserRepository.js'
 
 describe('UpdateProfile Use Case', () => {
-  let mockRepository: Mocked<IFindByIdAndUpdateUserRepository>
+  let mockUserRepository: Mocked<IUpdateUserRepository>
   let mockUser: User
   let updateProfile: UpdateProfile
 
@@ -19,12 +19,12 @@ describe('UpdateProfile Use Case', () => {
     vi.spyOn(mockUser, 'changeName')
     vi.spyOn(mockUser, 'changeEmail')
 
-    mockRepository = {
-      findById: vi.fn(),
-      findByIdAndUpdate: vi.fn(),
+    mockUserRepository = {
+      getById: vi.fn(),
+      update: vi.fn(),
     }
 
-    updateProfile = new UpdateProfile(mockRepository)
+    updateProfile = new UpdateProfile(mockUserRepository)
   })
 
   it('should successfully update user profile', async () => {
@@ -32,8 +32,8 @@ describe('UpdateProfile Use Case', () => {
     const newName = 'John Doe'
     const newEmail = 'john@example.com'
 
-    mockRepository.findById.mockResolvedValue(mockUser)
-    mockRepository.findByIdAndUpdate.mockResolvedValue(mockUser)
+    mockUserRepository.getById.mockResolvedValue(mockUser)
+    mockUserRepository.update.mockResolvedValue(mockUser)
 
     const result = await updateProfile.execute({
       id: userId,
@@ -41,15 +41,15 @@ describe('UpdateProfile Use Case', () => {
       email: newEmail,
     })
 
-    expect(mockRepository.findById).toHaveBeenCalledWith(userId)
+    expect(mockUserRepository.getById).toHaveBeenCalledWith(userId)
     expect(mockUser.changeName).toHaveBeenCalledWith(newName)
     expect(mockUser.changeEmail).toHaveBeenCalledWith(newEmail)
-    expect(mockRepository.findByIdAndUpdate).toHaveBeenCalledWith(mockUser)
+    expect(mockUserRepository.update).toHaveBeenCalledWith(mockUser)
     expect(result).toBe(mockUser)
   })
 
   it('should throw NotFoundError if user is not found', async () => {
-    mockRepository.findById.mockResolvedValue(null)
+    mockUserRepository.getById.mockResolvedValue(null)
 
     await expect(
       updateProfile.execute({
@@ -59,12 +59,12 @@ describe('UpdateProfile Use Case', () => {
       }),
     ).rejects.toThrow(NotFoundError)
 
-    expect(mockRepository.findByIdAndUpdate).not.toHaveBeenCalled()
+    expect(mockUserRepository.getById).toHaveBeenCalledWith('invalid-id')
   })
 
   it('should throw NotFoundError, if findByIdAndUpdate return null', async () => {
-    mockRepository.findById.mockResolvedValue(mockUser)
-    mockRepository.findByIdAndUpdate.mockResolvedValue(null)
+    mockUserRepository.getById.mockResolvedValue(mockUser)
+    mockUserRepository.update.mockResolvedValue(null)
 
     await expect(
       updateProfile.execute({

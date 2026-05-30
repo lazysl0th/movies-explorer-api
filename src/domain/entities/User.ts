@@ -1,4 +1,4 @@
-interface IUserData {
+export interface IUserData {
   id: string
   email: string
   name: string
@@ -35,7 +35,7 @@ export default class User {
 
   public toJSON() {
     return {
-      id: this.id,
+      _id: this.id,
       email: this.#email,
       name: this.#name,
     }

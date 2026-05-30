@@ -16,20 +16,27 @@ const VALIDATION_MESSAGES = {
     description: 'Secure user password',
     example: 'Secret_Password123',
   },
-  auth: {
-    idDescription: 'Unique identifier of the authenticated user',
-    idExample: '65cb3d4f1a2b3c4d5e6f7a8b',
-    emailDescription: 'Verified email address associated with the account',
-    emailExample: 'john@example.com',
-    nameDescription: 'Name of the user',
-    nameExample: 'John',
-  },
   token: {
     required: 'JWT token cookie is missing',
     invalidFormat: 'Token must be a string',
     description: 'Authentication token',
     example:
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
+  },
+  image: {
+    validate: 'Image URL must be a valid URL',
+    description: 'Image URL',
+    example: 'https://example.com/image.jpg',
+  },
+  trailer: {
+    validate: 'Trailer URL must be a valid URL',
+    description: 'Trailer URL',
+    example: 'https://example.com/trailer.mp4',
+  },
+  thumbnail: {
+    validate: 'Thumbnail URL must be a valid URL',
+    description: 'Thumbnail URL',
+    example: 'https://example.com/thumbnail.jpg',
   },
 } as const
 

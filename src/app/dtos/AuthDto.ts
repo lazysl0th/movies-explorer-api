@@ -1,9 +1,10 @@
 import validator from 'validator'
 import z from 'zod'
 
-import VALIDATION_MESSAGES from '@infrastructure/constants/validation-responses.js'
+import { authResponseDescription } from '@app/constants/responses-descriptions.js'
+import VALIDATION_MESSAGES from '@app/constants/validation-responses.js'
 
-const { email, password, name, auth, token } = VALIDATION_MESSAGES
+const { email, password, name, token } = VALIDATION_MESSAGES
 
 export const signinSchema = z.object({
   email: z.email(email.invalidFormat).meta({
@@ -30,23 +31,23 @@ export const signupSchema = signinSchema.extend({
 
 export const authResponseSchema = z.object({
   id: z.string().meta({
-    description: auth.idDescription,
-    example: auth.idExample,
+    description: authResponseDescription.idDescription,
+    example: authResponseDescription.idExample,
   }),
   email: z.string().meta({
-    description: auth.emailDescription,
-    example: auth.emailExample,
+    description: authResponseDescription.emailDescription,
+    example: authResponseDescription.emailExample,
   }),
   name: z.string().meta({
-    description: auth.nameDescription,
-    example: auth.nameExample,
+    description: authResponseDescription.nameDescription,
+    example: authResponseDescription.nameExample,
   }),
 })
 
 export const authJwtPayloadSchema = z.object({
   id: z.string().meta({
-    description: auth.idDescription,
-    example: auth.idExample,
+    description: authResponseDescription.idDescription,
+    example: authResponseDescription.idExample,
   }),
   iat: z.number().optional(),
   exp: z.number().optional(),
