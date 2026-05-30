@@ -22,11 +22,9 @@ describe('AddMovie Use Case', () => {
     duration: 136,
     year: '1999',
     country: 'USA',
-    image:
-      'https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg',
-    thumbnail:
-      'https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg',
-    trailer: 'https://www.youtube.com/watch?v=vKQi3bBA1y8',
+    image: 'https://example.com/image.jpg',
+    thumbnail: 'https://example.com/thumb.jpg',
+    trailer: 'https://example.com/trailer',
     owner: '1',
     movieId: 1,
   }

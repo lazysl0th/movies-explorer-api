@@ -4,8 +4,6 @@ import z from 'zod'
 import { movieResponseDescription } from '@app/constants/responses-descriptions.js'
 import VALIDATION_RESPONSE from '@app/constants/validation-responses.js'
 
-import { authResponseSchema } from './AuthDto.js'
-
 const { image, trailer, thumbnail } = VALIDATION_RESPONSE
 
 export const addMovieBodySchema = z.object({
@@ -66,6 +64,13 @@ export const addMovieBodySchema = z.object({
 
 export const addMovieSchema = addMovieBodySchema.extend({
   owner: z.string().meta({
+    description: movieResponseDescription.ownerDescription,
+    example: movieResponseDescription.ownerExample,
+  }),
+})
+
+export const deleteMovieSchema = z.object({
+  movieId: z.string().length(24).meta({
     description: movieResponseDescription.ownerDescription,
     example: movieResponseDescription.ownerExample,
   }),
@@ -143,3 +148,4 @@ export type TAddMovieBodyDto = z.infer<typeof addMovieBodySchema>
 export type TAddMovieDto = z.infer<typeof addMovieSchema>
 export type TMovieResponseDto = z.infer<typeof movieResponseSchema>
 export type TMoviesResponseDto = z.infer<typeof moviesResponseSchema>
+export type TDeleteMovieParamsDto = z.infer<typeof deleteMovieSchema>

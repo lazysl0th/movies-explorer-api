@@ -1,5 +1,3 @@
-import type User from './User.js'
-
 interface IMovieData {
   id: string
   country: string
@@ -71,6 +69,10 @@ export default class Movie {
     this.movieId = movieId
     this.nameRU = nameRU
     this.nameEN = nameEN
+  }
+
+  isOwnedBy(userId: string): boolean {
+    return this.owner === userId
   }
 
   public toJSON() {

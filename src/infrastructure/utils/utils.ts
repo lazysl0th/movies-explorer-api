@@ -19,10 +19,10 @@ export const handlerServerError = (
   server.close()
 }
 
-export const handlerListenServer = () =>
+export const handlerListenServer = (): void =>
   console.info(APP_LOGS.SERVER_RUNNING(config.PORT))
 
-export const handlerCriticalError = (err: Error) => {
+export const handlerCriticalError = (err: Error): void => {
   console.error({ err }, APP_LOGS.CRITICAL_ERROR_ENCOUNTERED)
   process.emit('SIGTERM')
 }

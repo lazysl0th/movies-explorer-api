@@ -2,6 +2,7 @@ import type { RequestHandler } from 'express'
 
 import type {
   TAddMovieBodyDto,
+  TDeleteMovieParamsDto,
   TMovieResponseDto,
   TMoviesResponseDto,
 } from '@app/dtos/MovieDto.js'
@@ -16,6 +17,7 @@ export type TMoviesFullRoutesValues =
 
 type TGetMoviesParams = Record<string, never>
 type TAddMovieParams = TGetMoviesParams
+type TDeleteMovieBody = Record<string, never>
 
 type TGetMoviesBody = TGetMoviesParams
 export type TGetMoviesHandler = RequestHandler<
@@ -32,5 +34,12 @@ export type TAddMovieHandler = RequestHandler<
   TRequestUser
 >
 
-type TUMoviesRoutes = keyof typeof API_ROUTES.movies
-export type TMovieValidations = Record<TUMoviesRoutes, RequestHandler>
+export type TDeleteMovieHandler = RequestHandler<
+  TDeleteMovieParamsDto,
+  TMovieResponseDto,
+  TDeleteMovieBody,
+  TRequestUser
+>
+
+type TMoviesRoutes = keyof typeof API_ROUTES.movies
+export type TMovieValidations = Record<TMoviesRoutes, RequestHandler>

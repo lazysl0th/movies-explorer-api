@@ -9,12 +9,11 @@ import cors from './middleware/cors.middleware.js'
 import errorsHandler from './middleware/errors/errorsHandler.js'
 import { errorLogger, requestLogger } from './middleware/logger.middleware.js'
 
-import type { Express } from 'express'
+import type { Express, Router } from 'express'
 
 import type { IDBModule } from '@app/interfaces/services/IDBService.js'
 
 import type { IApp } from '../../app/interfaces/base/app.js'
-import type { IRouter } from '../../app/interfaces/base/router.base.js'
 
 export default class App implements IApp {
   public readonly express: Express
@@ -22,7 +21,7 @@ export default class App implements IApp {
   private isAvailable = false
 
   constructor(
-    private readonly appRouter: IRouter,
+    private readonly appRoutes: Router,
     private readonly dbModule: IDBModule,
   ) {
     this.express = express()
@@ -36,7 +35,7 @@ export default class App implements IApp {
     this.express.use(express.json())
     this.express.use(express.urlencoded({ extended: true }))
     this.express.use(requestLogger)
-    this.express.use(this.appRouter.requestHandler)
+    this.express.use(this.appRoutes)
     this.express.use(errorLogger)
     this.express.use(errors())
     this.express.use(errorsHandler)

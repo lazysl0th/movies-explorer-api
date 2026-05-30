@@ -1,6 +1,6 @@
 import { updateUserProfileSchema } from '@app/dtos/UserDto.js'
 
-import validateBody from '../../middleware/validation-zod.middleware.js'
+import { validateBody } from '../../middleware/validation.middleware.js'
 
 import type { TUserValidations } from './types.js'
 

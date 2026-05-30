@@ -1,6 +1,7 @@
-const STARTUP_FAILED_PORT = (port: number) =>
+const STARTUP_FAILED_PORT = (port: number): string =>
   `Server startup failed: Port ${port} is already in use by another process.`
-const SERVER_RUNNING = (port: number) => `Server is running on port ${port}`
+const SERVER_RUNNING = (port: number): string =>
+  `Server is running on port ${port}`
 const CRITICAL_STARTUP_ERROR = 'Critical error during HTTP server startup'
 const CLEANUP_START = 'Cleaning up internal resources...'
 const CLEANUP_SUCCESS = 'Internal resources successfully cleaned up.'
