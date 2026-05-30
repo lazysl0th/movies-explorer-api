@@ -3,25 +3,20 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import BadRequestError from '@domain/errors/BadRequestError.js'
 import UserModel from '@infrastructure/persistence/mongodb/UserModel.js'
 
-import {
-  createTestId,
-  fakeLocalCredetials,
-  fakeUser,
-  userRepository,
-} from './setup.js'
+import { fakeLocalCredetials, fakeUser, userRepository } from './setup.js'
 
-describe('MongooseUserRepository - findById', () => {
+describe('MongooseUserRepository - update', () => {
   beforeEach(async () => {
     await UserModel.deleteMany({})
     await UserModel.create({
-      _id: fakeUser.id,
       name: fakeUser.name,
       email: fakeUser.email,
       password: fakeLocalCredetials.passwordHash,
+      _id: fakeUser.id,
     })
   })
 
-  it('should successfully find user by id and return domain entity', async () => {
+  it('should successfully update user by id and return domain entity', async () => {
     const user = await userRepository.findById(fakeUser.id)
 
     expect(user).not.toBeNull()
@@ -31,7 +26,7 @@ describe('MongooseUserRepository - findById', () => {
   })
 
   it('should return null if user is not found', async () => {
-    const nonExistingId = createTestId(2)
+    const nonExistingId = userRepository.generateId()
     const user = await userRepository.findById(nonExistingId)
     expect(user).toBeNull()
   })

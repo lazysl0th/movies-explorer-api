@@ -1,9 +1,13 @@
-import { model, Schema } from 'mongoose'
+import { model, Schema, Types } from 'mongoose'
 
 import type { HydratedDocument, InferSchemaType } from 'mongoose'
 
 const userSchema = new Schema(
   {
+    _id: {
+      type: Types.ObjectId,
+      required: true,
+    },
     email: {
       type: String,
       required: true,
@@ -20,13 +24,18 @@ const userSchema = new Schema(
     },
   },
   {
+    _id: false,
     timestamps: true,
   },
 )
 
-type TUser = InferSchemaType<typeof userSchema>
+type TDbUser = InferSchemaType<typeof userSchema>
 
-type TUserDocument = HydratedDocument<TUser>
+export type TUserDocument = HydratedDocument<TDbUser>
+
+type TDbSafeUser = Omit<TDbUser, 'password'>
+
+export type TSafeUserDocument = HydratedDocument<TDbSafeUser>
 
 const UserModel = model<TUserDocument>('User', userSchema)
 

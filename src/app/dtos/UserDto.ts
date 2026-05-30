@@ -8,4 +8,10 @@ export type TRequestUser = Pick<User, 'id'>
 
 export const userProfileResponseSchema = authResponseSchema
 
+export const updateUserProfileSchema = authResponseSchema
+
 export type TGetProfileResponseDto = z.infer<typeof userProfileResponseSchema>
+
+export type TUpdateUserProfileBodyDto = z.infer<typeof updateUserProfileSchema>
+
+export type TUpdateUserProfileResponseDto = TGetProfileResponseDto

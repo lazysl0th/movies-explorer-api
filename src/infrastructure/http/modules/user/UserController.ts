@@ -1,29 +1,26 @@
 import HttpStatusCode from '@infrastructure/constants/https-status-code.js'
 
 import type GetProfile from '@app/use-cases/users/GetProfile.js'
+import type UpdateProfile from '@app/use-cases/users/UpdateProfile.js'
 
-import type { TGetProfileHandler } from './types.js'
+import type { TGetProfileHandler, TUpdateProfileHandler } from './types.js'
 
 export default class UserController {
-  constructor(private readonly getProfile: GetProfile) {}
+  constructor(
+    private readonly getProfile: GetProfile,
+    private readonly updateProfile: UpdateProfile,
+  ) {}
 
-  getUserProfile: TGetProfileHandler = async (req, res, next) => {
+  getUserProfile: TGetProfileHandler = async (req, res) => {
     const { id } = req.user
     const user = await this.getProfile.execute(id)
     res.status(HttpStatusCode.Ok).send(user)
+  }
 
-    /* User.findById(req.user._id)
-      .then((user) => {
-        if (!user) {
-          throw new NotFoundError(NOT_FOUND.text)
-        }
-        return res.status(OK.statusCode).send(user)
-      })
-      .catch((err) => {
-        if (err.name === 'CastError' || err.name === 'ValidationError') {
-          return next(new BadRequestError(BAD_REQUEST.text))
-        }
-        return next(err)
-      }) */
+  updateUserProfile: TUpdateProfileHandler = async (req, res) => {
+    const { id } = req.user
+    const { name, email } = req.body
+    const user = await this.updateProfile.execute({ id, name, email })
+    res.status(HttpStatusCode.Ok).send(user)
   }
 }

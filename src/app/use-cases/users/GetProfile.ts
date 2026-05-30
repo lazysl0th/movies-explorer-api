@@ -1,4 +1,3 @@
-import InvalidCredentialsError from '@domain/errors/InvalidCredentialsError.js'
 import NotFoundError from '@domain/errors/NotFoundError.js'
 
 import type { IFindByIdUserRepository } from '@app/interfaces/repositories/IUserRepository.js'

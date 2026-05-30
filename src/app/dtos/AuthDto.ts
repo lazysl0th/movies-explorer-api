@@ -63,4 +63,9 @@ export type TLoginBodyDto = z.infer<typeof signinSchema>
 
 export type TRegisterBodyDto = z.infer<typeof signupSchema>
 
-export type TAuthResponseDto = z.infer<typeof authResponseSchema>
+export type TAuthUserResponseDto = z.infer<typeof authResponseSchema>
+
+export interface ILocalAuthResponseDto {
+  user: TAuthUserResponseDto
+  token: string
+}

@@ -1,17 +1,34 @@
+import type LocalCredentials from '@domain/entities/LocalCredentials.js'
 import type User from '@domain/entities/User.js'
 
-export type TNewUser = Pick<User, 'email' | 'name' | 'passwordHash'>
+export interface IUserWithLocalCredentials {
+  user: User
+  localCredentials: LocalCredentials
+}
 
 export interface IUserRepository {
-  findUserByCredentials: (email: string) => Promise<User | null>
-  create: (user: TNewUser) => Promise<User>
+  generateId: () => string
+  findUserByCredentials: (
+    email: string,
+  ) => Promise<IUserWithLocalCredentials | null>
+  create: (user: IUserWithLocalCredentials) => Promise<User>
   findById: (id: string) => Promise<User | null>
+  findByIdAndUpdate: (user: User) => Promise<User | null>
 }
 
 export type ILoginUserRepository = Pick<
   IUserRepository,
   'findUserByCredentials'
 >
-export type IRegisterUserRepository = Pick<IUserRepository, 'create'>
+export type IRegisterUserRepository = Pick<
+  IUserRepository,
+  'generateId' | 'create'
+>
 
 export type IFindByIdUserRepository = Pick<IUserRepository, 'findById'>
+
+export type IFindByIdAndUpdateUserRepository = Pick<
+  IUserRepository,
+  'findByIdAndUpdate'
+> &
+  IFindByIdUserRepository

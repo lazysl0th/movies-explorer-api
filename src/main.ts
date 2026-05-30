@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express'
 import LocalAuth from '@app/use-cases/auth/LocalAuth.js'
 import Register from '@app/use-cases/auth/Register.js'
 import GetProfile from '@app/use-cases/users/GetProfile.js'
+import UpdateProfile from '@app/use-cases/users/UpdateProfile.js'
 import getTerminusOptions from '@infrastructure/config/terminus.config.js'
 import openApiDocumentation from '@infrastructure/http/apiDocs/index.docs.js'
 import AuthController from '@infrastructure/http/modules/auth/AuthController.js'
@@ -13,6 +14,7 @@ import createAuthRoutes from '@infrastructure/http/modules/auth/authRoutes.js'
 import authValidations from '@infrastructure/http/modules/auth/authValidations.js'
 import UserController from '@infrastructure/http/modules/user/UserController.js'
 import createUserRoutes from '@infrastructure/http/modules/user/userRoutes.js'
+import userValidations from '@infrastructure/http/modules/user/userValidations.js'
 import createDocRoutes from '@infrastructure/http/routes/docRoutes.js'
 import Database from '@infrastructure/persistence/database.module.js'
 import UserModel from '@infrastructure/persistence/mongodb/UserModel.js'
@@ -48,9 +50,10 @@ function bootstrap() {
   const authController = new AuthController(localAuth, register)
 
   const getProfile = new GetProfile(mongooseUserRepository)
-  const userController = new UserController(getProfile)
+  const updateProfile = new UpdateProfile(mongooseUserRepository)
+  const userController = new UserController(getProfile, updateProfile)
   const authRoutes = createAuthRoutes(authValidations, authController)
-  const userRoutes = createUserRoutes(userController)
+  const userRoutes = createUserRoutes(userController, userValidations)
 
   const appRouter = new AppRouter(docRoutes, authRoutes, userRoutes)
   const mongoose = new MongooseService(config.MONGODB_URI)

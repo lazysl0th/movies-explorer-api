@@ -1,16 +1,17 @@
 import { Router } from 'express'
 
-import { updateUserProfile } from '../../controllers/user.controller.js'
-import { updateUserProfileValidation } from '../../middleware/validation.js'
-
+import type { TUserValidations } from './types.js'
 import type UserController from './UserController.js'
 
-const createUserRoutes = (userController: UserController) => {
+const createUserRoutes = (
+  userController: UserController,
+  userValidation: TUserValidations,
+): Router => {
   const router = Router()
 
   router.get('/me', userController.getUserProfile)
 
-  router.patch('/me', updateUserProfileValidation, updateUserProfile)
+  router.patch('/me', userValidation.me, userController.updateUserProfile)
 
   return router
 }
