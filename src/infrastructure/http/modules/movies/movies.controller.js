@@ -1,6 +1,6 @@
-import BadRequestError from '../../../domain/errors/badRequest.js'
-import response from '../../constants/response.js'
-import Movie from '../../persistence/mongodb/movie.schema.js'
+import BadRequestError from '../../../../domain/errors/badRequest.js'
+import response from '../../../constants/response.js'
+import Movie from '../../../persistence/mongodb/movie.schema.js'
 
 const { CREATED, BAD_REQUEST, OK } = response
 
@@ -19,7 +19,7 @@ export const addMovie = (req, res, next) => {
     nameEN,
   } = req.body
 
-  const owner = req.user._id
+  const owner = req.user.id
 
   Movie.create({
     country,
@@ -47,7 +47,7 @@ export const addMovie = (req, res, next) => {
 }
 
 export const deleteMovieByCredentials = (req, res, next) => {
-  Movie.deleteMovieByCredentials(req.params.movieId, req.user._id)
+  Movie.deleteMovieByCredentials(req.params.movieId, req.user.id)
     .then((movie) => res.status(OK.statusCode).send(movie))
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
@@ -59,6 +59,8 @@ export const deleteMovieByCredentials = (req, res, next) => {
 export const getMovies = (req, res, next) => {
   Movie.find({})
     .populate('owner')
-    .then((movies) => res.status(OK.statusCode).send(movies))
+    .then((movies) => {
+      res.status(OK.statusCode).send(movies)
+    })
     .catch(next)
 }

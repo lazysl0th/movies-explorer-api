@@ -5,9 +5,9 @@ import LocalCredentials from '@domain/entities/LocalCredentials.js'
 import User from '@domain/entities/User.js'
 import PasswordHash from '@domain/value-objects/user/PasswordHash.js'
 
-import type { TRegisterBodyDto } from '@infrastructure/http/modules/auth/auth.validationsSchemas.js'
 import type { Mocked } from 'vitest'
 
+import type { TRegisterBodyDto } from '@app/dtos/AuthDto.js'
 import type { IRegisterUserRepository } from '@app/interfaces/repositories/IUserRepository.js'
 import type { THashGeneratorService } from '@app/interfaces/services/IHashService.js'
 

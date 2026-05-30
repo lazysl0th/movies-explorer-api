@@ -11,7 +11,7 @@ import {
   fakeUser,
   resetWithDefaultUser,
   userRepository,
-} from './setup.js'
+} from '../setup.js'
 
 describe('MongooseUserRepository - create', () => {
   beforeEach(async () => {

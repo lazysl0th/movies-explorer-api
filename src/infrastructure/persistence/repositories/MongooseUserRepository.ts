@@ -34,7 +34,7 @@ export default class MongooseUserRepository implements IUserRepository {
     throw e
   }
 
-  async findUserByCredentials(
+  async getByCredentials(
     email: string,
   ): Promise<IUserWithLocalCredentials | null> {
     const userData = await this.userModel.findOne({ email }).select('+password')
@@ -72,7 +72,7 @@ export default class MongooseUserRepository implements IUserRepository {
     }
   }
 
-  async findById(id: string): Promise<User | null> {
+  async getById(id: string): Promise<User | null> {
     try {
       const userData = await this.userModel.findById(id)
       if (!userData) return null
@@ -86,7 +86,7 @@ export default class MongooseUserRepository implements IUserRepository {
     }
   }
 
-  async findByIdAndUpdate(user: User): Promise<User | null> {
+  async update(user: User): Promise<User | null> {
     try {
       const userData = await this.userModel.findByIdAndUpdate(
         user.id,

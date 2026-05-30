@@ -8,6 +8,7 @@ export const BASE_ROUTES = {
   auth: '/auth',
   doc: '/api-docs',
   users: '/users',
+  movies: '/movies',
 } as const
 
 export const API_ROUTES = {
@@ -20,6 +21,9 @@ export const API_ROUTES = {
   users: {
     me: '/me',
   },
+  movies: {
+    '/': '/',
+  },
 } as const
 
 export const FULL_API_ROUTES = {
@@ -31,5 +35,8 @@ export const FULL_API_ROUTES = {
   doc: {},
   users: {
     me: `${BASE_ROUTES.users}${API_ROUTES.users.me}`,
+  },
+  movies: {
+    '/': `${BASE_ROUTES.movies}${API_ROUTES.movies['/']}`,
   },
 } as const satisfies TRoutesMap

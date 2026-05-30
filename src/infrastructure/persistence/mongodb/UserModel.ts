@@ -33,11 +33,7 @@ type TDbUser = InferSchemaType<typeof userSchema>
 
 export type TUserDocument = HydratedDocument<TDbUser>
 
-type TDbSafeUser = Omit<TDbUser, 'password'>
-
-export type TSafeUserDocument = HydratedDocument<TDbSafeUser>
-
-const UserModel = model<TUserDocument>('User', userSchema)
+const UserModel = model<TDbUser>('User', userSchema)
 
 export type TUserModel = typeof UserModel
 

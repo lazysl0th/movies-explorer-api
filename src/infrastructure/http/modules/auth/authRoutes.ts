@@ -20,7 +20,7 @@ const createAuthRoutes = (
     authValidation.signup,
     authController.registerUser,
   )
-  router.get(API_ROUTES.auth.signup, authController.logout)
+  router.get(API_ROUTES.auth.signout, authController.logout)
   return router
 }
 
