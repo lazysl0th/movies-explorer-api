@@ -1,3 +1,5 @@
+import { inject, injectable } from 'tsyringe'
+
 import LocalCredentials from '@domain/entities/LocalCredentials.js'
 import User from '@domain/entities/User.js'
 
@@ -5,9 +7,12 @@ import type { TRegisterBodyDto } from '@app/dtos/AuthDto.js'
 import type { IRegisterUserRepository } from '@app/interfaces/repositories/IUserRepository.js'
 import type { THashGeneratorService } from '@app/interfaces/services/IHashService.js'
 
+@injectable()
 export default class Register {
   constructor(
+    @inject('UserRepository')
     private readonly registerRepository: IRegisterUserRepository,
+    @inject('HashService')
     private readonly hashGeneratorService: THashGeneratorService,
   ) {}
 

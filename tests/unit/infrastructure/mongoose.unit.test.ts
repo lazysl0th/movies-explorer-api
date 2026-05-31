@@ -36,7 +36,7 @@ describe('chech mongoose', () => {
   let fakeMongooseService: IDBService
 
   beforeEach(() => {
-    fakeMongooseService = new MongooseService(config.MONGODB_URI)
+    fakeMongooseService = new MongooseService(config)
     vi.spyOn(console, 'info').mockImplementation(() => {})
     vi.spyOn(console, 'error').mockImplementation(() => {})
   })

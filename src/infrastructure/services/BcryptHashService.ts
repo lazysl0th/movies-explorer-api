@@ -1,12 +1,17 @@
 import bcrypt from 'bcryptjs'
+import { inject, injectable } from 'tsyringe'
 
 import type IHashService from '@app/interfaces/services/IHashService.js'
+import type { TBcryptServiceConfig } from '@infrastructure/config/env.config.js'
 
+@injectable()
 export default class BcryptHashService implements IHashService {
-  constructor(private readonly saltRounds: number) {}
+  constructor(
+    @inject('Config') private readonly config: TBcryptServiceConfig,
+  ) {}
 
   async generate(data: string): Promise<string> {
-    return bcrypt.hash(data, this.saltRounds)
+    return bcrypt.hash(data, this.config.SALT_ROUNDS)
   }
 
   // eslint-disable-next-line class-methods-use-this

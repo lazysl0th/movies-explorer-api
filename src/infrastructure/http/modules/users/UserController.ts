@@ -1,15 +1,17 @@
+import { inject, injectable } from 'tsyringe'
+
+import GetProfile from '@app/use-cases/users/GetProfile.js'
+import UpdateProfile from '@app/use-cases/users/UpdateProfile.js'
 import UnauthorizedError from '@domain/errors/UnauthorizedError.js'
 import HttpStatusCode from '@infrastructure/constants/https-status-code.js'
 
-import type GetProfile from '@app/use-cases/users/GetProfile.js'
-import type UpdateProfile from '@app/use-cases/users/UpdateProfile.js'
-
 import type { TGetProfileHandler, TUpdateProfileHandler } from './types.js'
 
+@injectable()
 export default class UserController {
   constructor(
-    private readonly getProfile: GetProfile,
-    private readonly updateProfile: UpdateProfile,
+    @inject('GetProfile') private readonly getProfile: GetProfile,
+    @inject('UpdateProfile') private readonly updateProfile: UpdateProfile,
   ) {}
 
   getUserProfile: TGetProfileHandler = async (req, res) => {

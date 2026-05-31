@@ -1,4 +1,5 @@
 import { mongo, MongooseError, Types } from 'mongoose'
+import { inject, injectable } from 'tsyringe'
 
 import Movie from '@domain/entities/Movies.js'
 import BadRequestError from '@domain/errors/BadRequestError.js'
@@ -10,8 +11,9 @@ import type { IMovieRepository } from '@app/interfaces/repositories/IMovieReposi
 
 import type { TMovieDocument, TMovieModel } from '../mongodb/MovieModel.js'
 
+@injectable()
 export default class MongooseMovieRepository implements IMovieRepository {
-  constructor(private readonly movieModel: TMovieModel) {}
+  constructor(@inject('MovieModel') private readonly movieModel: TMovieModel) {}
 
   // eslint-disable-next-line class-methods-use-this
   public generateId(): string {

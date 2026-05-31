@@ -1,4 +1,5 @@
 import { mongo, MongooseError, Types } from 'mongoose'
+import { inject, injectable } from 'tsyringe'
 
 import LocalCredentials from '@domain/entities/LocalCredentials.js'
 import User from '@domain/entities/User.js'
@@ -12,8 +13,9 @@ import type {
 
 import type { TUserDocument, TUserModel } from '../mongodb/UserModel.js'
 
+@injectable()
 export default class MongooseUserRepository implements IUserRepository {
-  constructor(private readonly userModel: TUserModel) {}
+  constructor(@inject('UserModel') private readonly userModel: TUserModel) {}
 
   // eslint-disable-next-line class-methods-use-this
   public generateId(): string {

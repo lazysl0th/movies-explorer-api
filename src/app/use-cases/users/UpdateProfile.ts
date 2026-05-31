@@ -1,3 +1,5 @@
+import { inject, injectable } from 'tsyringe'
+
 import NotFoundError from '@domain/errors/NotFoundError.js'
 
 import type {
@@ -6,8 +8,12 @@ import type {
 } from '@app/interfaces/repositories/IUserRepository.js'
 import type User from '@domain/entities/User.js'
 
+@injectable()
 export default class UpdateProfile {
-  constructor(private readonly updateRepository: IUpdateUserRepository) {}
+  constructor(
+    @inject('UserRepository')
+    private readonly updateRepository: IUpdateUserRepository,
+  ) {}
 
   async execute({ id, name, email }: IUpdateUserCredentials): Promise<User> {
     const user = await this.updateRepository.getById(id)

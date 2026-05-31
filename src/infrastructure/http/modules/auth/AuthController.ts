@@ -1,16 +1,18 @@
+import { inject, injectable } from 'tsyringe'
+
+import LocalAuth from '@app/use-cases/auth/LocalAuth.js'
+import Register from '@app/use-cases/auth/Register.js'
 import HttpStatusCode from '@infrastructure/constants/https-status-code.js'
 
 import type { RequestHandler } from 'express'
 
-import type LocalAuth from '@app/use-cases/auth/LocalAuth.js'
-import type Register from '@app/use-cases/auth/Register.js'
-
 import type { TLoginHandler, TRegisterHandler } from './types.js'
 
+@injectable()
 export default class AuthController {
   constructor(
-    private readonly localAuth: LocalAuth,
-    private readonly register: Register,
+    @inject('LocalAuth') private readonly localAuth: LocalAuth,
+    @inject('Register') private readonly register: Register,
   ) {}
 
   loginByEmail: TLoginHandler = async (req, res) => {

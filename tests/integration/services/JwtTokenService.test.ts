@@ -6,9 +6,12 @@ import JwtTokenService from '@infrastructure/services/JwtTokenService.js'
 import type { SignOptions } from 'jsonwebtoken'
 
 import type ITokenService from '@app/interfaces/services/ITokenService.js'
+import type { TJwtServiceConfig } from '@infrastructure/config/env.config.js'
 
 describe('check JwtTokenService', () => {
-  const jwtSecret = 'secret'
+  const jwtSecret: TJwtServiceConfig = {
+    JWT_SECRET: 'secret',
+  }
   let signOptions: SignOptions = { expiresIn: '7d' }
   const jwtTokenService: ITokenService = new JwtTokenService(jwtSecret)
   const payload: object = { id: '1' }

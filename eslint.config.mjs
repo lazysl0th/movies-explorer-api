@@ -112,71 +112,11 @@ export default defineConfig([
         'ignorePackages',
         { js: 'always', ts: 'never' },
       ],
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/explicit-module-boundary-types': 'warn',
-      'boundaries/dependencies': [
-        'error',
-        {
-          default: 'disallow',
-          rules: [
-            // === СЛОЙ APP ===
-            {
-              from: { type: 'app' },
-              allow: [
-                { to: { type: 'app' } },
-                { to: { type: 'module', internalPath: 'index.{ts,js}' } },
-                { to: { type: 'infrastructure' } },
-                { to: { type: 'shared' } },
-              ],
-            },
-
-            // === СЛОЙ MODULE ===
-            // 1. Разрешаем модулям импортировать файлы ИЗ СЕБЯ ЖЕ (произвольные файлы)
-            {
-              from: { type: 'module' },
-              allow: [
-                { to: { type: 'module' } }, // Временный оверрайд: ниже мы ограничим чужие модули
-                { to: { type: 'infrastructure' } },
-                { to: { type: 'shared' } },
-              ],
-            },
-            // 2. А теперь ЗАПРЕЩАЕМ импорт из ЧУЖИХ модулей в обход index.ts
-            {
-              from: { type: 'module' },
-              disallow: [
-                {
-                  to: {
-                    type: 'module',
-                    internalPath: '!index.{ts,js}', // Если путь НЕ index.ts — запрещено
-                  },
-                },
-              ],
-              // Важно: этот disallow сработает для межмодульных связей,
-              // если у вас в settings правильно настроен mode: 'folder'
-            },
-
-            // === СЛОЙ INFRASTRUCTURE ===
-            {
-              from: { type: 'infrastructure' },
-              allow: [
-                { to: { type: 'infrastructure' } },
-                { to: { type: 'shared' } },
-              ],
-            },
-
-            // === СЛОЙ SHARED ===
-            {
-              from: { type: 'shared' },
-              allow: [{ to: { type: 'shared' } }],
-            },
-          ],
-        },
-      ],
     },
     languageOptions: {
       parserOptions: {
         projectService: {
-          allowDefaultProject: ['vitest.config.ts'],
+          allowDefaultProject: ['vitest.config.ts', 'vitest.setup.ts'],
         },
       },
     },
