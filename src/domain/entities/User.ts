@@ -33,7 +33,7 @@ export default class User {
     this.#name = name
   }
 
-  public toJSON() {
+  public toJSON(): object {
     return {
       _id: this.id,
       email: this.#email,

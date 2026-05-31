@@ -8,7 +8,10 @@ export type TRequestUser = Pick<User, 'id'>
 
 export const userProfileResponseSchema = authResponseSchema
 
-export const updateUserProfileSchema = authResponseSchema
+export const updateUserProfileSchema = authResponseSchema.pick({
+  name: true,
+  email: true,
+})
 
 export type TGetProfileResponseDto = z.infer<typeof userProfileResponseSchema>
 

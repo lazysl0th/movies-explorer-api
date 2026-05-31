@@ -2,7 +2,6 @@ import type { RequestHandler } from 'express'
 
 import type {
   TGetProfileResponseDto,
-  TRequestUser,
   TUpdateUserProfileBodyDto,
   TUpdateUserProfileResponseDto,
 } from '@app/dtos/UserDto.js'
@@ -19,8 +18,7 @@ type TGetProfileBody = TGetProfileParams
 export type TGetProfileHandler = RequestHandler<
   TGetProfileParams,
   TGetProfileResponseDto,
-  TGetProfileBody,
-  TRequestUser
+  TGetProfileBody
 >
 
 export type TUpdateProfileParams = TGetProfileParams
@@ -28,8 +26,7 @@ export type TUpdateProfileParams = TGetProfileParams
 export type TUpdateProfileHandler = RequestHandler<
   TUpdateProfileParams,
   TUpdateUserProfileResponseDto,
-  TUpdateUserProfileBodyDto,
-  TRequestUser
+  TUpdateUserProfileBodyDto
 >
 
 type TUsersRoutes = keyof typeof API_ROUTES.users

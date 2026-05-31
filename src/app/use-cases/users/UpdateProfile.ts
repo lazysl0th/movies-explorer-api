@@ -1,13 +1,15 @@
 import NotFoundError from '@domain/errors/NotFoundError.js'
 
-import type { TUpdateUserProfileBodyDto } from '@app/dtos/UserDto.js'
-import type { IUpdateUserRepository } from '@app/interfaces/repositories/IUserRepository.js'
+import type {
+  IUpdateUserCredentials,
+  IUpdateUserRepository,
+} from '@app/interfaces/repositories/IUserRepository.js'
 import type User from '@domain/entities/User.js'
 
 export default class UpdateProfile {
   constructor(private readonly updateRepository: IUpdateUserRepository) {}
 
-  async execute({ id, name, email }: TUpdateUserProfileBodyDto): Promise<User> {
+  async execute({ id, name, email }: IUpdateUserCredentials): Promise<User> {
     const user = await this.updateRepository.getById(id)
     if (!user) throw new NotFoundError('User')
     user.changeName(name)

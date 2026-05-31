@@ -2,4 +2,6 @@ import cors from 'cors'
 
 import corsOptions from '@infrastructure/config/cors.config.js'
 
-export default cors(corsOptions)
+const corsMiddleware = cors(corsOptions)
+
+export default corsMiddleware

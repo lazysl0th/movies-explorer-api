@@ -1,7 +1,8 @@
-import type { RequestHandler } from 'express'
+import type { Request, RequestHandler } from 'express'
 
 import type {
   TAuthUserResponseDto,
+  TCookieDto,
   TLoginBodyDto,
   TRegisterBodyDto,
 } from '@app/dtos/AuthDto.js'
@@ -33,3 +34,7 @@ export type TRegisterHandler = RequestHandler<
   TAuthUserResponseDto,
   TRegisterBodyDto
 >
+
+export interface ICookieRequest extends Request {
+  cookies: TCookieDto
+}

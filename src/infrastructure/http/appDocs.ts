@@ -1,6 +1,6 @@
 import { createDocument } from 'zod-openapi'
 
-import config from '@infrastructure/config/env.js'
+import config from '@infrastructure/config/env.config.js'
 
 import authRoutesJson from './modules/auth/authDocs.js'
 import movieRoutesJson from './modules/movies/movieDocs.js'

@@ -1,3 +1,4 @@
+import UnauthorizedError from '@domain/errors/UnauthorizedError.js'
 import HttpStatusCode from '@infrastructure/constants/https-status-code.js'
 
 import type AddMovie from '@app/use-cases/movies/AddMovie.js'
@@ -18,13 +19,15 @@ export default class MovieController {
   ) {}
 
   getUserMovies: TGetMoviesHandler = async (req, res) => {
-    const { id } = req.user
+    const id = req.user?.id
+    if (!id) throw new UnauthorizedError()
     const movies = await this.getUserSavedMovies.execute(id)
     res.status(HttpStatusCode.Ok).send(movies)
   }
 
   saveMovie: TAddMovieHandler = async (req, res) => {
-    const { id } = req.user
+    const id = req.user?.id
+    if (!id) throw new UnauthorizedError()
     const movieData = req.body
     const movie = await this.addMovie.execute({ ...movieData, owner: id })
     res.status(HttpStatusCode.Ok).send(movie)
@@ -32,7 +35,8 @@ export default class MovieController {
 
   deleteMovieByCredentials: TDeleteMovieHandler = async (req, res) => {
     const { movieId } = req.params
-    const { id } = req.user
+    const id = req.user?.id
+    if (!id) throw new UnauthorizedError()
     const movie = await this.deleteMovie.execute({ movieId, userId: id })
     res.status(HttpStatusCode.Ok).send(movie)
   }

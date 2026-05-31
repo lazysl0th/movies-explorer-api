@@ -1,10 +1,9 @@
-import validator from 'validator'
 import z from 'zod'
 
 import { movieResponseDescription } from '@app/constants/responses-descriptions.js'
-import VALIDATION_RESPONSE from '@app/constants/validation-responses.js'
+import VALIDATION_MESSAGES from '@app/constants/validation-responses.js'
 
-const { image, trailer, thumbnail } = VALIDATION_RESPONSE
+const { image, trailer, thumbnail } = VALIDATION_MESSAGES
 
 export const addMovieBodySchema = z.object({
   country: z.string().meta({
@@ -27,26 +26,17 @@ export const addMovieBodySchema = z.object({
     description: movieResponseDescription.descriptionDescription,
     example: movieResponseDescription.descriptionExample,
   }),
-  image: z
-    .string()
-    .refine((value) => validator.isURL(value), {
-      message: image.validate,
-    })
-    .meta({
-      description: movieResponseDescription.imageDescription,
-      example: movieResponseDescription.imageExample,
-    }),
-  trailer: z
-    .string()
-    .refine((value) => validator.isURL(value), {
-      message: trailer.validate,
-    })
-    .meta({
-      description: movieResponseDescription.trailerDescription,
-      example: movieResponseDescription.trailerExample,
-    }),
-  thumbnail: z.string().refine((value) => validator.isURL(value), {
-    message: thumbnail.validate,
+  image: z.url(image.validate).meta({
+    description: movieResponseDescription.imageDescription,
+    example: movieResponseDescription.imageExample,
+  }),
+  trailer: z.url(trailer.validate).meta({
+    description: movieResponseDescription.trailerDescription,
+    example: movieResponseDescription.trailerExample,
+  }),
+  thumbnail: z.url(thumbnail.validate).meta({
+    description: movieResponseDescription.thumbnailDescription,
+    example: movieResponseDescription.thumbnailExample,
   }),
   movieId: z.number().meta({
     description: movieResponseDescription.movieIdDescription,
@@ -97,33 +87,18 @@ export const movieResponseSchema = z.object({
     description: movieResponseDescription.descriptionDescription,
     example: movieResponseDescription.descriptionExample,
   }),
-  image: z
-    .string()
-    .refine((value) => validator.isURL(value), {
-      message: image.validate,
-    })
-    .meta({
-      description: movieResponseDescription.imageDescription,
-      example: movieResponseDescription.imageExample,
-    }),
-  trailer: z
-    .string()
-    .refine((value) => validator.isURL(value), {
-      message: trailer.validate,
-    })
-    .meta({
-      description: movieResponseDescription.trailerDescription,
-      example: movieResponseDescription.trailerExample,
-    }),
-  thumbnail: z
-    .string()
-    .refine((value) => validator.isURL(value), {
-      message: thumbnail.validate,
-    })
-    .meta({
-      description: movieResponseDescription.thumbnailDescription,
-      example: movieResponseDescription.thumbnailExample,
-    }),
+  image: z.url(image.validate).meta({
+    description: movieResponseDescription.imageDescription,
+    example: movieResponseDescription.imageExample,
+  }),
+  trailer: z.url(trailer.validate).meta({
+    description: movieResponseDescription.trailerDescription,
+    example: movieResponseDescription.trailerExample,
+  }),
+  thumbnail: z.url().meta({
+    description: movieResponseDescription.thumbnailDescription,
+    example: movieResponseDescription.thumbnailExample,
+  }),
   owner: z.string().meta({
     description: movieResponseDescription.ownerDescription,
     example: movieResponseDescription.ownerExample,

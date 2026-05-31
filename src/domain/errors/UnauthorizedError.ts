@@ -5,6 +5,6 @@ export default class UnauthorizedError extends DomainError {
 
   constructor(message = 'Authorization required') {
     super(message)
-    this.code = 'UNAUTHORIZED'
+    this.code = `UNAUTHORIZED`
   }
 }

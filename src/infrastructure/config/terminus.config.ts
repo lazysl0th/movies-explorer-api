@@ -1,6 +1,6 @@
 import { HealthCheckError } from '@godaddy/terminus'
 
-import config from './env.js'
+import config from './env.config.js'
 import APP_LOGS from '../constants/app-logs.constants.js'
 
 import type { TerminusOptions } from '@godaddy/terminus'
