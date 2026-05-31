@@ -1,5 +1,6 @@
-import config from './env.js'
-import Forbidden from '../../domain/errors/forbidden.js'
+import ForbiddenError from '@domain/errors/ForbiddenError.js'
+
+import config from './env.config.js'
 
 import type { CorsOptions } from 'cors'
 
@@ -10,7 +11,7 @@ const customOrigin: CorsOptions['origin'] = (origin, callback) => {
     callback(null, true)
     return
   }
-  callback(new Forbidden())
+  callback(new ForbiddenError())
 }
 
 const corsOptions: CorsOptions = {

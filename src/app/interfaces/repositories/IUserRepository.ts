@@ -1,9 +1,14 @@
+import type { TUpdateUserProfileBodyDto } from '@app/dtos/UserDto.js'
 import type LocalCredentials from '@domain/entities/LocalCredentials.js'
 import type User from '@domain/entities/User.js'
 
 export interface IUserWithLocalCredentials {
   user: User
   localCredentials: LocalCredentials
+}
+
+export interface IUpdateUserCredentials extends TUpdateUserProfileBodyDto {
+  id: string
 }
 
 export interface IUserRepository {

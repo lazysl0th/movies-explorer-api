@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import config from '@infrastructure/config/env.js'
+import config from '@infrastructure/config/env.config.js'
 import MongooseService from '@infrastructure/services/MongooseService.js'
 
 import type { IDBService } from '@app/interfaces/services/IDBService.js'

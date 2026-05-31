@@ -1,17 +1,19 @@
-const CONNECTING = (serviceName: string) => `[${serviceName}]: ⏳ Connecting...`
-const CONNECTED = (serviceName: string) =>
+const CONNECTING = (serviceName: string): string =>
+  `[${serviceName}]: ⏳ Connecting...`
+const CONNECTED = (serviceName: string): string =>
   `[${serviceName}]: ✅ Connected successfully.`
-const OPEN = (serviceName: string) =>
+const OPEN = (serviceName: string): string =>
   `[${serviceName}]: 🚀 Connection open. Models Mongoose is ready.`
-const ERROR = (e: Error, serviceName: string) =>
+const ERROR = (e: Error, serviceName: string): string =>
   `[${serviceName}]: ❌ Connection error: ${e.message}`
-const DISCONNECTED = (serviceName: string) =>
+const DISCONNECTED = (serviceName: string): string =>
   `[${serviceName}]: ⚠️ Disconnected.`
-const RECONNECTED = (serviceName: string) =>
+const RECONNECTED = (serviceName: string): string =>
   `[${serviceName}]: 🔄 Connection successfully recovered.`
-const DISCONNECTING = (serviceName: string) =>
+const DISCONNECTING = (serviceName: string): string =>
   `[${serviceName}]: 🔌 Disconnecting...`
-const CLOSE = (serviceName: string) => `[${serviceName}]: 🔒 Connection closed.`
+const CLOSE = (serviceName: string): string =>
+  `[${serviceName}]: 🔒 Connection closed.`
 
 const DB_LOGS = {
   CONNECTING,

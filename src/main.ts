@@ -12,9 +12,11 @@ import GetProfile from '@app/use-cases/users/GetProfile.js'
 import UpdateProfile from '@app/use-cases/users/UpdateProfile.js'
 import getTerminusOptions from '@infrastructure/config/terminus.config.js'
 import openApiDocumentation from '@infrastructure/http/appDocs.js'
+import passportAuth from '@infrastructure/http/middleware/passportAuth.middleware.js'
 import AuthController from '@infrastructure/http/modules/auth/AuthController.js'
 import createAuthRoutes from '@infrastructure/http/modules/auth/authRoutes.js'
 import authValidations from '@infrastructure/http/modules/auth/authValidations.js'
+import initializePassport from '@infrastructure/http/modules/auth/passport/passport.config.js'
 import createDocRoutes from '@infrastructure/http/modules/docs/docRoutes.js'
 import MovieController from '@infrastructure/http/modules/movies/MovieController.js'
 import createMovieRoutes from '@infrastructure/http/modules/movies/movieRoutes.js'
@@ -31,7 +33,7 @@ import BcryptHashService from '@infrastructure/services/BcryptHashService.js'
 import JwtTokenService from '@infrastructure/services/JwtTokenService.js'
 import MongooseService from '@infrastructure/services/MongooseService.js'
 
-import config from './infrastructure/config/env.js'
+import config from './infrastructure/config/env.config.js'
 import createAppRoutes from './infrastructure/http/appRoutes.js'
 import App from './infrastructure/http/server.js'
 import {
@@ -54,6 +56,9 @@ function bootstrap() {
     hashService,
     tokenService,
   )
+
+  initializePassport(mongooseUserRepository)
+
   const register = new Register(mongooseUserRepository, hashService)
   const authController = new AuthController(localAuth, register)
 
@@ -73,12 +78,15 @@ function bootstrap() {
   )
   const movieRoutes = createMovieRoutes(movieValidations, movieController)
 
-  const appRoutes = createAppRoutes({
-    auth: authRoutes,
-    doc: docRoutes,
-    users: userRoutes,
-    movies: movieRoutes,
-  })
+  const appRoutes = createAppRoutes(
+    {
+      auth: authRoutes,
+      doc: docRoutes,
+      users: userRoutes,
+      movies: movieRoutes,
+    },
+    passportAuth,
+  )
   const mongoose = new MongooseService(config.MONGODB_URI)
   const dbModule = new Database(mongoose)
 

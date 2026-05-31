@@ -1,13 +1,12 @@
 import z from 'zod'
 
 import DomainError from '@domain/errors/DomainError.js'
-import response from '@infrastructure/constants/response.js'
+import HttpStatusCode from '@infrastructure/constants/https-status-code.js'
+import httpResponseMap from '@infrastructure/constants/response.js'
 
 import zodErrorHandler from './zodErrorsHandler.js'
 
 import type { ErrorRequestHandler } from 'express'
-
-const { INTERNAL_SERVER_ERROR } = response
 
 const errorsHandler: ErrorRequestHandler = (e, _, res, next) => {
   console.log(e)
@@ -23,17 +22,20 @@ const errorsHandler: ErrorRequestHandler = (e, _, res, next) => {
   }
 
   if (e instanceof DomainError) {
-    res.status(404).send({ message: e.code })
-    return
+    const meta = httpResponseMap[e.code]
+
+    if (meta) {
+      res.status(meta.status).send({
+        error: e.code,
+        i18nKey: meta.i18nKey,
+      })
+      return
+    }
   }
 
-  const { statusCode = INTERNAL_SERVER_ERROR.statusCode, message } = e
-
-  res.status(statusCode).send({
-    message:
-      statusCode === INTERNAL_SERVER_ERROR.statusCode
-        ? INTERNAL_SERVER_ERROR.text
-        : message,
+  res.status(HttpStatusCode.InternalServerError).send({
+    error: 'INTERNAL_SERVER_ERROR',
+    i18nKey: 'errors.system.internal',
   })
 }
 

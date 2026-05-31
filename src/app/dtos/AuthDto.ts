@@ -44,7 +44,7 @@ export const authResponseSchema = z.object({
   }),
 })
 
-export const authJwtPayloadSchema = z.object({
+export const jwtPayloadSchema = z.object({
   id: z.string().meta({
     description: authResponseDescription.idDescription,
     example: authResponseDescription.idExample,
@@ -65,6 +65,10 @@ export type TLoginBodyDto = z.infer<typeof signinSchema>
 export type TRegisterBodyDto = z.infer<typeof signupSchema>
 
 export type TAuthUserResponseDto = z.infer<typeof authResponseSchema>
+
+export type TJwtPayloadDto = z.infer<typeof jwtPayloadSchema>
+
+export type TCookieDto = z.infer<typeof cookieTokenSchema>
 
 export interface ILocalAuthResponseDto {
   user: TAuthUserResponseDto

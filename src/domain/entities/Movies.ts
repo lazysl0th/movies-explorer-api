@@ -75,7 +75,7 @@ export default class Movie {
     return this.owner === userId
   }
 
-  public toJSON() {
+  public toJSON(): object {
     return {
       _id: this.id,
       country: this.country,

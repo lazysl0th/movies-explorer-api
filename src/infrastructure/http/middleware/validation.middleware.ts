@@ -14,3 +14,10 @@ export const validateParams =
     if (schema) await schema.parseAsync(req.params)
     next()
   }
+
+export const validateCookie =
+  (schema?: z.ZodTypeAny): RequestHandler =>
+  async (req, _, next): Promise<void> => {
+    if (schema) await schema.parseAsync(req.cookies)
+    next()
+  }

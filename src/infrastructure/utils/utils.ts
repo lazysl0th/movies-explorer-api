@@ -1,4 +1,4 @@
-import config from '../config/env.js'
+import config from '../config/env.config.js'
 import APP_LOGS from '../constants/app-logs.constants.js'
 
 import type { Server } from 'node:http'

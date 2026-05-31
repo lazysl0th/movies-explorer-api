@@ -5,7 +5,7 @@ import helmet from 'helmet'
 
 import rateLimitMiddleware from '@infrastructure/http/middleware/rate-limit.middleware.js'
 
-import cors from './middleware/cors.middleware.js'
+import corsMiddleware from './middleware/cors.middleware.js'
 import errorsHandler from './middleware/errors/errorsHandler.js'
 import { errorLogger, requestLogger } from './middleware/logger.middleware.js'
 
@@ -29,7 +29,7 @@ export default class App implements IApp {
 
   private initMiddlewares() {
     this.express.use(helmet())
-    this.express.use(cors)
+    this.express.use(corsMiddleware)
     this.express.use(rateLimitMiddleware)
     this.express.use(cookieParser())
     this.express.use(express.json())
