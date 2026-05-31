@@ -1,3 +1,5 @@
+import { inject, injectable } from 'tsyringe'
+
 import InvalidCredentialsError from '@domain/errors/InvalidCredentialsError.js'
 
 import type { ILocalAuthResponseDto, TLoginBodyDto } from '@app/dtos/AuthDto.js'
@@ -5,10 +7,14 @@ import type { ILoginUserRepository } from '@app/interfaces/repositories/IUserRep
 import type { THashComparerService } from '@app/interfaces/services/IHashService.js'
 import type { TTokenGenerateService } from '@app/interfaces/services/ITokenService.js'
 
+@injectable()
 export default class LocalAuth {
   constructor(
+    @inject('UserRepository')
     private readonly loginRepository: ILoginUserRepository,
+    @inject('HashService')
     private readonly hashComparerService: THashComparerService,
+    @inject('TokenService')
     private readonly tokenGenerateService: TTokenGenerateService,
   ) {}
 

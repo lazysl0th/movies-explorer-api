@@ -1,10 +1,16 @@
+import { inject, injectable } from 'tsyringe'
+
 import NotFoundError from '@domain/errors/NotFoundError.js'
 
 import type { IGetByIdUserRepository } from '@app/interfaces/repositories/IUserRepository.js'
 import type User from '@domain/entities/User.js'
 
+@injectable()
 export default class GetProfile {
-  constructor(private readonly getUserRepository: IGetByIdUserRepository) {}
+  constructor(
+    @inject('UserRepository')
+    private readonly getUserRepository: IGetByIdUserRepository,
+  ) {}
 
   async execute(userId: string): Promise<User> {
     const user = await this.getUserRepository.getById(userId)

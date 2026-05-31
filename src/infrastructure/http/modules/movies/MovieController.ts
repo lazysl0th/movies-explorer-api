@@ -1,9 +1,10 @@
+import { inject, injectable } from 'tsyringe'
+
+import AddMovie from '@app/use-cases/movies/AddMovie.js'
+import DeleteMovie from '@app/use-cases/movies/DeleteMovie.js'
+import GetUserMovies from '@app/use-cases/movies/GetUserMovies.js'
 import UnauthorizedError from '@domain/errors/UnauthorizedError.js'
 import HttpStatusCode from '@infrastructure/constants/https-status-code.js'
-
-import type AddMovie from '@app/use-cases/movies/AddMovie.js'
-import type DeleteMovie from '@app/use-cases/movies/DeleteMovie.js'
-import type GetUserMovies from '@app/use-cases/movies/GetUserMovies.js'
 
 import type {
   TAddMovieHandler,
@@ -11,11 +12,12 @@ import type {
   TGetMoviesHandler,
 } from './types.js'
 
+@injectable()
 export default class MovieController {
   constructor(
-    private readonly getUserSavedMovies: GetUserMovies,
-    private readonly addMovie: AddMovie,
-    private readonly deleteMovie: DeleteMovie,
+    @inject('GetUserMovies') private readonly getUserSavedMovies: GetUserMovies,
+    @inject('AddMovie') private readonly addMovie: AddMovie,
+    @inject('DeleteMovie') private readonly deleteMovie: DeleteMovie,
   ) {}
 
   getUserMovies: TGetMoviesHandler = async (req, res) => {

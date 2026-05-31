@@ -2,9 +2,13 @@ import { describe, expect, it } from 'vitest'
 
 import BcryptHashService from '@infrastructure/services/BcryptHashService.js'
 
+import type { TBcryptServiceConfig } from '@infrastructure/config/env.config.js'
+
 describe('check BcryptHashService', () => {
-  const saltRounds = 1
-  const hashService = new BcryptHashService(saltRounds)
+  const config: TBcryptServiceConfig = {
+    SALT_ROUNDS: 1,
+  }
+  const hashService = new BcryptHashService(config)
   const password = 'my-secret-password'
 
   it('should successfully hash a string and verify it', async () => {

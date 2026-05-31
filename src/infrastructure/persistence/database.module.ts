@@ -1,11 +1,16 @@
+import { inject, injectable } from 'tsyringe'
+
 import type {
   IDBModule,
   IDBService,
   TCheckConnectionsResult,
 } from '../../app/interfaces/services/IDBService.js'
 
+@injectable()
 export default class Database implements IDBModule {
-  constructor(private readonly mongoose: IDBService) {}
+  constructor(
+    @inject('MongooseService') private readonly mongoose: IDBService,
+  ) {}
 
   public async connects(): Promise<void> {
     await this.mongoose.connect()

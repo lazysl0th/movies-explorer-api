@@ -60,7 +60,7 @@ beforeAll(async () => {
   vi.spyOn(console, 'error').mockImplementation(() => {})
 
   mongoServer = await MongoMemoryServer.create()
-  mongooseService = new MongooseService(mongoServer.getUri())
+  mongooseService = new MongooseService({ MONGODB_URI: mongoServer.getUri() })
   await mongooseService.connect()
   await initDatabase()
 })

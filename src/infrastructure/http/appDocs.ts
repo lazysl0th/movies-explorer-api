@@ -55,6 +55,7 @@ export const appRoutesJson: ZodOpenApiObject = {
   },
 }
 
-const openApiDocumentation: Record<string, any> = createDocument(appRoutesJson)
+const openApiDocumentation: ReturnType<typeof createDocument> =
+  createDocument(appRoutesJson)
 
 export default openApiDocumentation

@@ -1,24 +1,30 @@
 import mongoose from 'mongoose'
+import { inject, injectable } from 'tsyringe'
 
 import DB_LOGS from '@infrastructure/constants/db-logs.constants.js'
+
+import type { TMogooseServiceConfig } from '@infrastructure/config/env.config.js'
 
 import type {
   IDBService,
   TDBServiceName,
 } from '../../app/interfaces/services/IDBService.js'
 
+@injectable()
 export default class MongooseService implements IDBService {
   public readonly serviceName: TDBServiceName = 'Mongoose'
 
   private readonly mongooseConnection = mongoose.connection
 
-  constructor(private readonly uri: string) {}
+  constructor(
+    @inject('Config') private readonly config: TMogooseServiceConfig,
+  ) {}
 
   private registered = false
 
   public async connect(): Promise<void> {
     this.registerEvents()
-    await mongoose.connect(this.uri)
+    await mongoose.connect(this.config.MONGODB_URI)
   }
 
   public async checkConnection(): Promise<boolean> {

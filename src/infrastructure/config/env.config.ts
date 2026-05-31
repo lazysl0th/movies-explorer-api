@@ -27,4 +27,10 @@ const config = {
   isProd: env.NODE_ENV === 'production',
 } as const
 
+export type TConfig = z.infer<typeof envSchema>
+
+export type TBcryptServiceConfig = Pick<TConfig, 'SALT_ROUNDS'>
+export type TJwtServiceConfig = Pick<TConfig, 'JWT_SECRET'>
+export type TMogooseServiceConfig = Pick<TConfig, 'MONGODB_URI'>
+
 export default config

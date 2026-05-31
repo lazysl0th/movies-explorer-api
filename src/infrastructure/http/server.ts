@@ -2,6 +2,7 @@ import { errors } from 'celebrate'
 import cookieParser from 'cookie-parser'
 import express from 'express'
 import helmet from 'helmet'
+import { inject, injectable } from 'tsyringe'
 
 import rateLimitMiddleware from '@infrastructure/http/middleware/rate-limit.middleware.js'
 
@@ -15,14 +16,15 @@ import type { IDBModule } from '@app/interfaces/services/IDBService.js'
 
 import type { IApp } from '../../app/interfaces/base/app.js'
 
+@injectable()
 export default class App implements IApp {
   public readonly express: Express
 
   private isAvailable = false
 
   constructor(
-    private readonly appRoutes: Router,
-    private readonly dbModule: IDBModule,
+    @inject('appRoutes') private readonly appRoutes: Router,
+    @inject('dbModule') private readonly dbModule: IDBModule,
   ) {
     this.express = express()
   }
